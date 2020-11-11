@@ -1,7 +1,7 @@
 <template>
-  <div class="main__block-form">
-    <p v-if="data.list.length == 0" class="main__block-form-empty">Вы можете перетащить элемент слева, <br>чтобы добавить компоненты</p>
-    <form class="cForm-wrapper">
+  <div class="main__block-form main__block-form-edit">
+    <p v-if="data.list.length == 0" class="main__block-form-empty">Для создания формы <br>перетащите нужные компоненты слева</p>
+    <form class="cForm-wrapper cForm-wrapper-edit">
       <draggable
               class="div"
               v-model="data.list"
@@ -28,41 +28,6 @@
   </div>
 </template>
 
-
-<!--<template>-->
-<!--  <div class="widget-form-container">-->
-<!--    <div v-if="data.list.length === 0" class="form-empty">Перетащите компоненты слева, <br>чтобы создать форму</div>-->
-<!--    <el-form-->
-<!--            :size="data.config.size"-->
-<!--            label-suffix=":"-->
-<!--            :label-position="data.config.labelPosition"-->
-<!--            :label-width="data.config.labelWidth + 'px'"-->
-<!--    >-->
-<!--      <draggable-->
-<!--              class-->
-<!--              v-model="data.list"-->
-<!--              v-bind="{group:'people', ghostClass: 'ghost',animation: 200, handle: '.drag-widget'}"-->
-<!--              @end="handleMoveEnd"-->
-<!--              @add="handleWidgetAdd"-->
-<!--      >-->
-<!--        <transition-group name="fade" tag="div" class="widget-form-list">-->
-<!--          <template v-for="(element, index) in data.list">-->
-<!--            <template>-->
-<!--              <widget-form-item-->
-<!--                      v-if="element && element.key"-->
-<!--                      :key="element.key"-->
-<!--                      :element="element"-->
-<!--                      :select.sync="selectWidget"-->
-<!--                      :index="index"-->
-<!--                      :data="data"-->
-<!--              ></widget-form-item>-->
-<!--            </template>-->
-<!--          </template>-->
-<!--        </transition-group>-->
-<!--      </draggable>-->
-<!--    </el-form>-->
-<!--  </div>-->
-<!--</template>-->
 
 
 <script>
@@ -99,8 +64,6 @@
         this.selectWidget = this.data.list[index];
       },
       handleWidgetAdd(evt) {
-        console.log("add", evt);
-        console.log("end", evt);
         const newIndex = evt.newIndex;
         const to = evt.to;
         console.log(to);

@@ -17,8 +17,6 @@
                                         class="aside__block-lists"
                                         :list="basicComponents"
                                         v-bind="{group:{ name:'people', pull:'clone',put:false},sort:false, ghostClass: 'ghost'}"
-                                        @end="handleMoveEnd"
-                                        @start="handleMoveStart"
                                         :move="handleMove"
                                 >
                                     <li
@@ -40,36 +38,61 @@
                         <section class="main">
                             <div class="main__header">
                                 <ul class="main__header-links">
-                                    <li
-                                        class="main__header-link"
-                                        v-for="link in links"
-                                        :key="link.name"
-                                    >
+                                    <li class="main__header-link">
+                                        <a href="#"
+                                           :class="{active: configBlock === 'formEdit'}"
+                                           @click="handleConfigBlock('formEdit')"
+                                        >
+                                            <i class="icon iconfont icon-settings"></i>
+                                            <span>Режим правки</span>
+                                        </a>
+                                    </li>
+                                    <li class="main__header-link">
+                                        <a href="#"
+                                           :class="{active: configBlock === 'formPreview'}"
+                                           @click="handleConfigBlock('formPreview')"
+                                        >
+                                            <i class="icon iconfont icon-view"></i>
+                                            <span>Предварительный просмотр</span>
+                                        </a>
+                                    </li>
+                                    <li class="main__header-link">
                                         <a href="#">
-                                            <i class="icon iconfont" :class="link.icon"></i>
-                                            <span>{{link.name}}</span>
+                                            <i class="icon iconfont icon-download"></i>
+                                            <span>Скачать форму</span>
+                                        </a>
+                                    </li>
+                                    <li class="main__header-link">
+                                        <a href="#">
+                                            <i class="icon iconfont icon-delete"></i>
+                                            <span>Удалить форму</span>
                                         </a>
                                     </li>
                                 </ul>
                             </div>
 
+
                             <div class="main__block-wrapper">
                                 <div class="main__block" :class="{'widget-empty': widgetForm.list.length == 0}">
+
                                     <widget-form
+                                            v-show="configBlock ==='formEdit'"
                                             v-if="!resetJson"
                                             ref="widgetForm"
                                             :data="widgetForm"
                                             :select.sync="widgetFormSelect"
                                     ></widget-form>
+
+                                    <view-form
+                                            v-show="configBlock ==='formPreview'"
+                                            v-if="!resetJson"
+                                            ref="widgetForm"
+                                            :data="widgetForm"
+                                            :select.sync="widgetFormSelect"
+                                    ></view-form>
                                 </div>
                             </div>
 
-                            <generate-form
-                                    v-if="!resetJson"
-                                    ref="widgetForm"
-                                    :data="widgetForm"
-                                    :select.sync="widgetFormSelect"
-                            ></generate-form>
                         </section>
 
 
@@ -118,20 +141,20 @@
     import WidgetConfig from "./components/form/WidgetConfig";
     import FormConfig from "./components/form/FormConfig";
     import widgetForm from "./components/form/widgetForm";
-    import GenerateForm from "./components/form/GenerateForm";
+    import viewForm from "./components/form/viewForm";
     import {
         basicComponents,
     } from "./components/form/componentsConfig.js";
 
-  export default {
-      components: {
+    export default {
+        components: {
           Draggable,
           WidgetConfig,
           FormConfig,
           widgetForm,
-          GenerateForm
-      },
-      props: {
+          viewForm
+        },
+        props: {
           preview: {
               type: Boolean,
               default: false
@@ -174,31 +197,8 @@
               type: Array,
               default: () => ["grid"]
           }
-      },
-      // data() {
-      //     return {
-      //         basicComponents,
-      //         layoutComponents,
-      //         advanceComponents,
-      //         resetJson: false,
-      //         configTab: "widget",
-      //         widgetFormSelect: null,
-      //         previewVisible: false,
-      //         jsonVisible: false,
-      //         codeVisible: false,
-      //         uploadVisible: false,
-      //         widgetModels: {},
-      //         blank: "",
-      //         htmlTemplate: "",
-      //         vueTemplate: "",
-      //         jsonTemplate: "",
-      //         uploadEditor: null,
-      //         jsonCopyValue: "",
-      //         jsonClipboard: null,
-      //         codeActiveName: "vue"
-      //     };
-      // },
-      data() {
+        },
+        data() {
           return {
               basicComponents,
               resetJson: false,
@@ -217,10 +217,10 @@
                       inputHeight: 50,
                       inputBgColor: '#fff',
                       inputColor: '#333',
-                      inputBorderRadius: 0,
+                      inputBorderRadius: 4,
                       inputBorderWidth: 1,
                       inputBorderStyle: 'solid',
-                      inputBorderColor: '#000',
+                      inputBorderColor: '#d9d9d9',
                       inputShadowStyle: 'no',
                       labelTitleWeight: 'normal',
                       labelTitleSize: 18,
@@ -228,6 +228,7 @@
                   }
               },
               configTab: "form",
+              configBlock: "formEdit",
               widgetFormSelect: null,
               previewVisible: false,
               jsonVisible: false,
@@ -243,78 +244,19 @@
               jsonClipboard: null,
               codeActiveName: "vue"
           };
-      },
-    computed: {
-      // config() {
-      //     return {
-      //             formStyle: 'basic',
-      //             formMaxWidth: 100,
-      //             formBgColor: '#fff',
-      //             formBorderRadius: 0,
-      //             formBorderWidth: 0,
-      //             formBorderStyle: 'solid',
-      //             formBorderColor: '#000',
-      //             formShadowStyle: 'no',
-      //             inputWidth: 100,
-      //             inputHeight: 50,
-      //             inputBgColor: '#fff',
-      //             inputBorderRadius: 0,
-      //             inputBorderWidth: 1,
-      //             inputBorderStyle: 'solid',
-      //             inputBorderColor: '#000',
-      //             inputShadowStyle: 'no',
-      //             labelTitleWeight: 'normal',
-      //             labelTitleSize: 18,
-      //             labelTitleColor: '#333'
-      //     }
-      // },
-      links () {
-          return [
-            {name: 'Настройки', icon: 'icon-settings'},
-            {name: 'Предварительный просмотр', icon: 'icon-view'},
-            {name: 'Скачать форму', icon: 'icon-download'},
-            {name: 'Удалить', icon: 'icon-delete'},
-          ]
-      }
-    },
-    methods: {
-      _loadComponents() {
-          this.basicComponents = this.basicComponents.map(item => {
-              return {
-                  ...item,
-                  name: this.$t(`fm.components.fields.${item.type}`)
-              };
-          });
-          this.advanceComponents = this.advanceComponents.map(item => {
-              return {
-                  ...item,
-                  name: this.$t(`fm.components.fields.${item.type}`)
-              };
-          });
-          this.layoutComponents = this.layoutComponents.map(item => {
-              return {
-                  ...item,
-                  name: this.$t(`fm.components.fields.${item.type}`)
-              };
-          });
-      },
-      // handleGoGithub() {
-      //     window.location.href = "https://github.com/giscafer/vue-form-builder";
-      // },
-      handleConfigSelect(value) {
-          this.configTab = value;
-      },
-      handleMoveEnd(evt) {
-          console.log("end", evt);
-      },
-      handleMoveStart({ oldIndex }) {
-          console.log("start", oldIndex, this.basicComponents);
-      },
-      handleMove() {
-          return true;
-      },
-    },
-  }
+        },
+        methods: {
+            handleConfigSelect(value) {
+              this.configTab = value;
+            },
+            handleConfigBlock(value) {
+                this.configBlock = value;
+            },
+            handleMove() {
+              return true;
+            },
+        },
+    }
 </script>
 
 
@@ -504,16 +446,28 @@
             &-links {
                 display: flex;
                 align-items: center;
-                justify-content: flex-end;
+                justify-content: flex-start;
             }
             &-link {
                 display: block;
-                margin-left: 20px;
+                margin-right: 20px;
                 &>a {
+                    font-size: 18px;
                     display: block;
                     text-decoration: none;
+                    color: #409EFF;
                     &>.icon {
                         margin-right: 5px;
+                    }
+                    &>span {
+                        border-bottom: 1px solid transparent;
+                        padding: 2px 0;
+                    }
+                    &.active {
+                        color: darken(#409EFF, 25%);
+                        &>span {
+                            border-bottom: 1px solid darken(#409EFF, 25%);
+                        }
                     }
                 }
             }
@@ -547,7 +501,15 @@
                 border: 1px dashed #999;
             }
             &-form {
-                height: 100%;
+                &-edit {
+                    height: 100%;
+                }
+                &-view {
+                    height: 100%;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                }
                 &-empty {
                     position: absolute;
                     left: 50%;
@@ -556,6 +518,7 @@
                     text-align: center;
                     font-size: 26px;
                     line-height: 1.5;
+                    opacity: .8;
                 }
             }
         }
@@ -565,9 +528,11 @@
     .cForm {
         height: 100%;
         &-wrapper {
-            height: 100%;
-            &>div {
+            &-edit {
                 height: 100%;
+                &>div {
+                    height: 100%;
+                }
             }
         }
     }
@@ -577,6 +542,14 @@
         position: relative;
         padding: 20px 50px;
         border: 3px solid transparent;
+        &:before {
+            content: '';
+            position: absolute;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            top: 0;
+        }
         &.active {
             border: 3px solid #409EFF;
         }

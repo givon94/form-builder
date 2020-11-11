@@ -34,7 +34,6 @@
 
 
 <script>
-    // import FmUpload from "./Upload";
     import { genUniqKey } from "../../util/index";
     import itemsTemplate from "./itemsTemplate";
 

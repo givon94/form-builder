@@ -44,10 +44,10 @@
 
           <el-form-item label="Тень">
             <el-select v-model="data.formShadowStyle" placeholder="Тень">
-              <el-option label="Нет" value="no"></el-option>
-              <el-option label="Вариант 1" value="form-shadow1"></el-option>
-              <el-option label="Вариант 2" value="form-shadow1"></el-option>
-              <el-option label="Вариант 3" value="form-shadow1"></el-option>
+              <el-option label="Нет" value=""></el-option>
+              <el-option label="Вариант 1" value="cForm-shadow1"></el-option>
+              <el-option label="Вариант 2" value="cForm-shadow2"></el-option>
+              <el-option label="Вариант 3" value="cForm-shadow3"></el-option>
             </el-select>
           </el-form-item>
 
