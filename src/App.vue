@@ -63,46 +63,39 @@
                                     ></widget-form>
                                 </div>
                             </div>
+
+                            <generate-form
+                                    v-if="!resetJson"
+                                    ref="widgetForm"
+                                    :data="widgetForm"
+                                    :select.sync="widgetFormSelect"
+                            ></generate-form>
                         </section>
 
 
-                        <el-aside class="widget-config-container">
+                        <el-aside class="widget-config-container" style="width: 360px;">
                             <el-container>
                                 <el-header height="45px">
-                                    <div
-                                            class="config-tab"
-                                            :class="{active: configTab ==='widget'}"
-                                            @click="handleConfigSelect('widget')"
-                                    >Настрйоки компонентов</div>
                                     <div
                                             class="config-tab"
                                             :class="{active: configTab ==='form'}"
                                             @click="handleConfigSelect('form')"
                                     >Настройки формы</div>
+                                    <div
+                                            class="config-tab"
+                                            :class="{active: configTab ==='widget'}"
+                                            @click="handleConfigSelect('widget')"
+                                    >Настройки компонента</div>
+
                                 </el-header>
                                 <el-main class="config-content">
-                                    <widget-config v-show="configTab ==='widget'" :data="widgetFormSelect"></widget-config>
                                     <form-config v-show="configTab ==='form'" :data="widgetForm.config"></form-config>
+                                    <widget-config v-show="configTab ==='widget'" :data="widgetFormSelect"></widget-config>
                                 </el-main>
                             </el-container>
                         </el-aside>
 
-<!--                        <aside class="aside aside-right">-->
-<!--                            <div class="aside__block">-->
-<!--                                <div class="aside__block-header">-->
-<!--                                    <div class="aside__tab"-->
-<!--                                         :class="{active: configTab ==='widget'}"-->
-<!--                                    >Шаблоны компонента</div>-->
-<!--                                    <div class="aside__tab"-->
-<!--                                         :class="{active: configTab ==='form'}"-->
-<!--                                    >Шаблоны формы</div>-->
-<!--                                </div>-->
-<!--                                <div class="aside__block-content">-->
-<!--                                    <widget-config v-show="configTab ==='widget'" :data="widgetFormSelect"></widget-config>-->
-<!--                                    <form-config v-show="configTab ==='form'" :data="widgetForm.config"></form-config>-->
-<!--                                </div>-->
-<!--                            </div>-->
-<!--                        </aside>-->
+
                     </div>
                 </main>
                 <footer class="footer">
@@ -125,6 +118,7 @@
     import WidgetConfig from "./components/form/WidgetConfig";
     import FormConfig from "./components/form/FormConfig";
     import widgetForm from "./components/form/widgetForm";
+    import GenerateForm from "./components/form/GenerateForm";
     import {
         basicComponents,
     } from "./components/form/componentsConfig.js";
@@ -135,6 +129,7 @@
           WidgetConfig,
           FormConfig,
           widgetForm,
+          GenerateForm
       },
       props: {
           preview: {
@@ -210,40 +205,34 @@
               widgetForm: {
                   list: [],
                   config: {
-                      labelWidth: 100,
-                      labelPosition: "right",
-                      size: "small"
+                      formStyle: 'basic',
+                      formMaxWidth: 100,
+                      formBgColor: '#fff',
+                      formBorderRadius: 0,
+                      formBorderWidth: 0,
+                      formBorderStyle: 'solid',
+                      formBorderColor: '#000',
+                      formShadowStyle: 'no',
+                      inputWidth: 100,
+                      inputHeight: 50,
+                      inputBgColor: '#fff',
+                      inputColor: '#333',
+                      inputBorderRadius: 0,
+                      inputBorderWidth: 1,
+                      inputBorderStyle: 'solid',
+                      inputBorderColor: '#000',
+                      inputShadowStyle: 'no',
+                      labelTitleWeight: 'normal',
+                      labelTitleSize: 18,
+                      labelTitleColor: '#333'
                   }
               },
-              configTab: "widget",
+              configTab: "form",
               widgetFormSelect: null,
               previewVisible: false,
               jsonVisible: false,
               codeVisible: false,
               uploadVisible: false,
-              // remoteFuncs: {
-              //     func_test(resolve) {
-              //         setTimeout(() => {
-              //             const options = [
-              //                 { id: "1", name: "1111" },
-              //                 { id: "2", name: "2222" },
-              //                 { id: "3", name: "3333" }
-              //             ];
-              //
-              //             resolve(options);
-              //         }, 2000);
-              //     },
-              //     funcGetToken(resolve) {
-              //         request
-              //             .get("http://tools-server.xiaoyaoji.cn/api/uptoken")
-              //             .then(res => {
-              //                 resolve(res.uptoken);
-              //             });
-              //     },
-              //     upload_callback(response, file, fileList) {
-              //         console.log("callback", response, file, fileList);
-              //     }
-              // },
               widgetModels: {},
               blank: "",
               htmlTemplate: "",
@@ -252,18 +241,33 @@
               uploadEditor: null,
               jsonCopyValue: "",
               jsonClipboard: null,
-              jsonEg: `{
-                  "list": [],
-                  "config": {
-                    "labelWidth": 100,
-                    "labelPosition": "top",
-                    "size": "small"
-                  }
-                }`,
               codeActiveName: "vue"
           };
       },
     computed: {
+      // config() {
+      //     return {
+      //             formStyle: 'basic',
+      //             formMaxWidth: 100,
+      //             formBgColor: '#fff',
+      //             formBorderRadius: 0,
+      //             formBorderWidth: 0,
+      //             formBorderStyle: 'solid',
+      //             formBorderColor: '#000',
+      //             formShadowStyle: 'no',
+      //             inputWidth: 100,
+      //             inputHeight: 50,
+      //             inputBgColor: '#fff',
+      //             inputBorderRadius: 0,
+      //             inputBorderWidth: 1,
+      //             inputBorderStyle: 'solid',
+      //             inputBorderColor: '#000',
+      //             inputShadowStyle: 'no',
+      //             labelTitleWeight: 'normal',
+      //             labelTitleSize: 18,
+      //             labelTitleColor: '#333'
+      //     }
+      // },
       links () {
           return [
             {name: 'Настройки', icon: 'icon-settings'},
@@ -568,49 +572,49 @@
         }
     }
 
-
-    .widget-form-container .widget-form-list .widget-view {
+    /*Поля формы*/
+    .widget-view {
         position: relative;
-        //border: 1px dashed rgba(170, 170, 170, 0.7);
-        background-color: rgba(236, 245, 255, 0.3);
-        margin: 2px;
-    }
-
-    .widget-form-container .widget-form-list .widget-view.active {
-        outline: 2px solid #409EFF;
-        border: 1px solid #409EFF;
-    }
-
-    .widget-form-container .widget-form-list .widget-view .widget-view-drag {
-        position: absolute;
-        left: -2px;
-        top: -2px;
-        bottom: -18px;
-        height: 28px;
-        line-height: 28px;
-        background: #409EFF;
-        z-index: 9;
-    }
-
-    .widget-form-container .widget-form-list .widget-view .widget-view-drag i {
-        font-size: 14px;
-        color: #fff;
-        margin: 0 5px;
-        cursor: move;
+        padding: 20px 50px;
+        border: 3px solid transparent;
+        &.active {
+            border: 3px solid #409EFF;
+        }
+        &-drag {
+            position: absolute;
+            left: -2px;
+            top: -2px;
+            bottom: -18px;
+            height: 28px;
+            line-height: 28px;
+            background: #409EFF;
+            z-index: 9;
+            &>i {
+                font-size: 14px;
+                color: #fff;
+                margin: 0 5px;
+                cursor: move;
+            }
+        }
+        &-action {
+            position: absolute;
+            right: 0;
+            bottom: 0;
+            height: 28px;
+            line-height: 28px;
+            background: #409EFF;
+            z-index: 9;
+            &>i {
+                font-size: 14px;
+                color: #fff;
+                margin: 0 5px;
+                cursor: pointer;
+            }
+        }
     }
 
     .sortable-chosen.ghost {
         border-top: 3px solid red;
-    }
-
-    .widget-form-container .widget-form-list .widget-view .widget-view-action {
-        position: absolute;
-        right: 0;
-        bottom: 0;
-        height: 28px;
-        line-height: 28px;
-        background: #409EFF;
-        z-index: 9;
     }
 
     .el-form-item__content {
@@ -678,6 +682,12 @@
         }
         &:focus {
             outline: none;
+        }
+    }
+
+    .cForm_item input, textarea {
+        &:focus {
+            outline: none;
             &::-webkit-input-placeholder {
                 color: transparent
             }
@@ -692,6 +702,33 @@
             }
         }
     }
+
+    .cForm_item textarea  {
+        resize: none;
+    }
+
+
+
+    /*Настройки формы*/
+    .cForm {
+        &.horizontal {
+            & .cForm_item {
+                display: flex;
+                align-items: center;
+                &-text {
+                    margin: 0 15px 0 0;
+                }
+            }
+        }
+        &.basic {
+            & .cForm_item {
+                &-text {
+                    margin: 0 0 10px 0;
+                }
+            }
+        }
+    }
+
 
     .el-form-item__label {
         line-height: 1.3 !important;

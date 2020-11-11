@@ -6,6 +6,7 @@ import axios from 'axios'
 import ElementUI from 'element-ui';
 import './styles/reset.css'
 import './styles/iconfont/iconfont.css'
+import './styles/icons-input.css'
 
 import 'element-ui/lib/theme-chalk/index.css';
 

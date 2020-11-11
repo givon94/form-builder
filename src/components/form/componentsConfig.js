@@ -7,76 +7,73 @@ export const basicComponents = [
         type: 'title',
         name: 'Заголовок',
         icon: 'icon-title',
+        label: 'Заголовок',
     },
     {
         type: 'someText',
         name: 'Обычный текст',
         icon: 'icon-wenzishezhi',
+        label: 'Текст',
     },
     {
         type: 'input',
         name: 'Обычное поле',
         icon: 'icon-input',
-        bgIcon: true,
         label: 'Заголовок',
+        bgIcon: true,
+        className: '',
         options: {
             name: '',
-            width: '100%',
             defaultValue: '',
-            required: false,
-            dataType: 'string',
-            pattern: '',
             placeholder: '',
+            required: false,
             disabled: false,
         },
-        style: {
-            className: '',
-        }
     },
     {
         type: 'number',
         name: 'Числовое поле',
         icon: 'icon-number',
+        label: 'Заголовок',
         bgIcon: true,
+        className: '',
         options: {
             name: '',
-            width: '',
-            required: false,
-            defaultValue: 0,
+            defaultValue: '',
+            placeholder: '',
             min: '',
             max: '',
             step: 1,
+            required: false,
             disabled: false,
-            controlsPosition: '',
         },
-        style: {
-            className: '',
-        }
     },
     {
         type: 'select',
         name: 'Выпадающий список',
         icon: 'icon-tabs',
+        label: 'Заголовок',
         bgIcon: true,
+        className: '',
         options: {
             name: '',
             defaultValue: '',
             multiple: false,
-            disabled: false,
-            clearable: false,
-            placeholder: '',
             required: false,
+            disabled: false,
             showLabel: false,
-            width: '',
             options: [
                 {
-                    value: 'Option 1',
+                    value: 'Заголовок',
                 },
                 {
-                    value: 'Option 2',
+                    value: 'Опция 1',
                 },
                 {
-                    value: 'Option 3',
+                    value: 'Опция 2',
+                },
+                {
+                    value: 'Опция 3',
                 },
             ],
             remote: false,
@@ -87,16 +84,15 @@ export const basicComponents = [
                 label: 'label',
             },
             remoteFunc: '',
-            style: {
-                className: '',
-            }
         },
     },
     {
         type: 'name',
         name: 'Имя',
         icon: 'icon-user1',
+        label: 'Заголовок',
         bgIcon: true,
+        className: '',
         options: {
             name: 'name',
             width: '100%',
@@ -107,15 +103,14 @@ export const basicComponents = [
             placeholder: 'Впишите имя',
             disabled: false,
         },
-        style: {
-            className: '',
-        }
     },
     {
         type: 'phone',
         name: 'Телефон',
         icon: 'icon-phone',
+        label: 'Заголовок',
         bgIcon: true,
+        className: '',
         options: {
             name: 'phone',
             width: '100%',
@@ -126,15 +121,14 @@ export const basicComponents = [
             placeholder: 'Впишите телефон',
             disabled: false,
         },
-        style: {
-            className: '',
-        }
     },
     {
         type: 'email',
         name: 'Email',
         icon: 'icon-185078emailmailstreamline',
+        label: 'Заголовок',
         bgIcon: true,
+        className: '',
         options: {
             name: 'email',
             width: '100%',
@@ -145,15 +139,14 @@ export const basicComponents = [
             placeholder: 'Впишите email',
             disabled: false,
         },
-        style: {
-            className: '',
-        }
     },
     {
         type: 'textarea',
         name: 'Сообщение',
         icon: 'icon-8textarea',
+        label: 'Заголовок',
         bgIcon: true,
+        className: '',
         options: {
             name: 'message',
             width: '100%',
@@ -163,15 +156,14 @@ export const basicComponents = [
             pattern: '',
             placeholder: 'Сообщение',
         },
-        style: {
-            className: '',
-        }
     },
     {
         type: 'date',
         name: 'Дата',
         icon: 'icon-date',
+        label: 'Заголовок',
         bgIcon: true,
+        className: '',
         options: {
             defaultValue: '',
             readonly: false,
@@ -187,15 +179,14 @@ export const basicComponents = [
             required: false,
             width: '',
         },
-        style: {
-            className: '',
-        }
     },
     {
         type: 'time',
         name: 'Время',
         icon: 'icon-clock',
+        label: 'Заголовок',
         bgIcon: true,
+        className: '',
         options: {
             defaultValue: '21:19:56',
             readonly: false,
@@ -211,14 +202,12 @@ export const basicComponents = [
             required: false,
             width: '',
         },
-        style: {
-            className: '',
-        }
     },
     {
         type: 'radio',
         name: 'Радио кнопки',
         icon: 'icon-radio',
+        label: 'Заголовок',
         options: {
             inline: false,
             defaultValue: '',
@@ -253,6 +242,7 @@ export const basicComponents = [
         type: 'checkbox',
         name: 'Чекбокс кнопки',
         icon: 'icon-checkboxoutline',
+        label: 'Заголовок',
         options: {
             inline: false,
             defaultValue: [],
@@ -285,6 +275,7 @@ export const basicComponents = [
         type: 'slider',
         name: 'Слайдер',
         icon: 'icon-sliders-h',
+        label: 'Заголовок',
         options: {
             defaultValue: 0,
             disabled: false,
