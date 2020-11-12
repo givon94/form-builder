@@ -1,7 +1,7 @@
 <template>
   <div class="main__block-form main__block-form-edit">
-    <p v-if="data.list.length == 0" class="main__block-form-empty">Для создания формы <br>перетащите нужные компоненты слева</p>
-    <form class="cForm-wrapper cForm-wrapper-edit">
+    <p v-if="data.list.length === 0" class="main__block-form-empty">Для создания формы <br>перетащите нужные компоненты слева</p>
+    <form class="cForm-wrapper-edit">
       <draggable
               class="div"
               v-model="data.list"
@@ -9,7 +9,7 @@
               @end="handleMoveEnd"
               @add="handleWidgetAdd"
       >
-        <transition-group name="fade" tag="div" class="cForm" :class="data.config.formStyle">
+        <transition-group name="fade" tag="div" class="cForm cForm-edit" :class="data.config.formStyle">
           <template v-for="(element, index) in data.list">
             <template>
               <widget-form-item

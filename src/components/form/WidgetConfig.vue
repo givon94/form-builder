@@ -2,54 +2,107 @@
   <div v-if="show">
     <el-form label-position="top">
 
-
-<!--      <el-form-item-->
-<!--              label="Ширина"-->
-<!--              v-if="Object.keys(data.options).indexOf('width')>=0"-->
-<!--      >-->
-<!--        <el-input v-model="data.options.width"></el-input>-->
-<!--      </el-form-item>-->
-
-
-<!--      <el-form-item-->
-<!--              label="Size"-->
-<!--              v-if="Object.keys(data.options).indexOf('size')>=0"-->
-<!--      >-->
-<!--        Ширина-->
-<!--        <el-input style="width: 90px;" type="number" v-model.number="data.options.size.width"></el-input>-->
-<!--        Высота-->
-<!--        <el-input style="width: 90px;" type="number" v-model.number="data.options.size.height"></el-input>-->
-<!--      </el-form-item>-->
-
+        <!--Name-->
+        <el-form-item
+                v-if="data.type !== 'title' && data.type !== 'someText' && data.type !== 'button'"
+                label="Name">
+            <el-input class="small" v-if="Object.keys(data.options).indexOf('name')>=0" v-model="data.options.name"></el-input>
+            <el-input class="small" v-else v-model="data.model"></el-input>
+            <el-tooltip content="Указывает имя элемента, используется в качестве эталона при отправке данных. Должно быть уникальным и не повторяться." placement="top">
+                <span class="el-prompt el-icon-question" type="primary"></span>
+            </el-tooltip>
+        </el-form-item>
 
         <!--Заголовок-->
         <el-form-item label="Заголовок">
-            <el-input v-model="data.label"></el-input>
+            <el-input class="small" v-model="data.label"></el-input>
+            <el-tooltip content="Представляет собой подпись к полю ввода." placement="top">
+                <span class="el-prompt el-icon-question" type="primary"></span>
+            </el-tooltip>
         </el-form-item>
-
 
         <!--Placeholder-->
       <el-form-item
               label="Placeholder"
               v-if="Object.keys(data.options).indexOf('placeholder')>=0 && (data.type!=='time' || data.type!=='date')"
       >
-        <el-input v-model="data.options.placeholder"></el-input>
+        <el-input class="small" v-model="data.options.placeholder"></el-input>
+          <el-tooltip content="Подсказка отображается в поле ввода до того, как пользователь вводит значение." placement="top">
+              <span class="el-prompt el-icon-question" type="primary"></span>
+          </el-tooltip>
       </el-form-item>
       <el-form-item
-              label="Layout"
+              label="Выравнивание"
               v-if="Object.keys(data.options).indexOf('inline')>=0"
       >
         <el-radio-group v-model="data.options.inline">
-          <el-radio-button :label="false">Block</el-radio-button>
-          <el-radio-button :label="true">Inline</el-radio-button>
+          <el-radio-button :label="false">В строку</el-radio-button>
+          <el-radio-button :label="true">В колонку</el-radio-button>
         </el-radio-group>
       </el-form-item>
+
+        <!--Value-->
       <el-form-item
-              label="Display Input Box"
-              v-if="Object.keys(data.options).indexOf('showInput')>=0"
+              label="Значение по умолчанию"
+              v-if="Object.keys(data.options).indexOf('defaultValue')>=0
+                && data.type !== 'radio'
+                && data.type !== 'checkbox'"
       >
-        <el-switch v-model="data.options.showInput"></el-switch>
+          <el-input class="small" v-model="data.options.defaultValue"></el-input>
+          <el-tooltip content="Определяет значение поля ввода по умолчанию (отображается при загрузке формы и может быть отредактировано пользователем)." placement="top">
+              <span class="el-prompt el-icon-question" type="primary"></span>
+          </el-tooltip>
       </el-form-item>
+
+
+        <template v-if="data.type === 'title' || data.type === 'someText'">
+            <el-form-item label="Выравнивание">
+                <el-radio-group v-model="data.style.textAlign">
+                    <el-radio-button label="left">Слева</el-radio-button>
+                    <el-radio-button label="center">По центру</el-radio-button>
+                    <el-radio-button label="right">Справа</el-radio-button>
+                </el-radio-group>
+            </el-form-item>
+
+            <el-form-item label="Начертание">
+                <el-radio-group v-model="data.style.fontWeight">
+                    <el-radio-button label="700">Полужирное</el-radio-button>
+                    <el-radio-button label="400">Среднее</el-radio-button>
+                    <el-radio-button label="300">Тонкое</el-radio-button>
+                </el-radio-group>
+            </el-form-item>
+
+            <el-form-item label="Размер текста">
+                <el-slider v-model="data.style.fontSize"></el-slider>
+            </el-form-item>
+
+            <el-form-item label="Цвет текста">
+                <el-color-picker v-model="data.style.color"></el-color-picker>
+            </el-form-item>
+
+            <el-form-item label="Отступ сверху">
+                <el-slider v-model="data.style.marginTop"></el-slider>
+            </el-form-item>
+            <el-form-item label="Отступ снизу">
+                <el-slider v-model="data.style.marginBottom"></el-slider>
+            </el-form-item>
+        </template>
+
+        <!--Маска-->
+        <el-form-item v-if="data.type === 'phone'">
+            <el-form-item label="Маска">
+                <el-select v-model="data.options.maskValue" placeholder="Маска телефона" style="width: 100%;">
+                    <el-option
+                            v-for="mask in data.options.maskRules"
+                            :key="mask.value"
+                            :label="mask.label"
+                            :value="mask.value">
+                    </el-option>
+                </el-select>
+            </el-form-item>
+        </el-form-item>
+
+
       <el-form-item
               label="Минимум"
               v-if="Object.keys(data.options).indexOf('min')>=0"
@@ -86,20 +139,34 @@
       >
         <el-switch v-model="data.options.showAlpha"></el-switch>
       </el-form-item>
-      <el-form-item
+
+        <el-form-item
               label="Показывать дополнительный текст"
               v-if="Object.keys(data.options).indexOf('showLabel')>=0"
       >
         <el-switch v-model="data.options.showLabel"></el-switch>
+            <el-tooltip content="Установить разные значения, которые будут отображаться и передаваться." placement="top">
+                <span class="el-prompt el-icon-question" type="primary"></span>
+            </el-tooltip>
       </el-form-item>
+
+
+
       <!-- TODO: table config   START-->
       <!-- TODO: table config   END-->
+
+
+        <!--Опции списка и радио кнопок-->
       <el-form-item
               label="Опции"
               v-if="Object.keys(data.options).indexOf('options')>=0"
       >
         <template>
           <template v-if="data.type ==='radio' || (data.type ==='select'&&!data.options.multiple)">
+              <div class="faq_value" v-if="data.options.showLabel">
+                  <div class="faq_value-list">Передаваемые <br>в форме</div>
+                  <div class="faq_value-list">Отображаемые <br>в форме</div>
+              </div>
             <el-radio-group v-model="data.options.defaultValue">
               <draggable
                       tag="ul"
@@ -110,20 +177,19 @@
                 <li v-for="(item, index) in data.options.options" :key="index">
                   <el-radio :label="item.value" style="margin-right: 5px;">
                     <el-input
-                            :style="{'width': data.options.showLabel? '90px': '180px' }"
+                            :style="{'width': data.options.showLabel? '120px': '240px' }"
                             size="mini"
                             v-model="item.value"
                     ></el-input>
                     <el-input
-                            style="width:90px;"
+                            style="width:120px;"
                             size="mini"
                             v-if="data.options.showLabel"
                             v-model="item.label"
                     ></el-input>
-                    <!-- <input v-model="item.value"/> -->
                   </el-radio>
                   <i class="drag-item" style="font-size: 16px;margin: 0 5px;cursor: move;">
-                    <i class="iconfont icon-icon_bars"></i>
+                    <i class="iconfont icon-bars"></i>
                   </i>
                   <el-button
                           @click="handleOptionsRemove(index)"
@@ -141,6 +207,10 @@
 
           <template v-if="data.type ==='checkbox' || (data.type ==='select' && data.options.multiple)">
             <el-checkbox-group v-model="data.options.defaultValue">
+                <div class="faq_value" v-if="data.options.showLabel">
+                    <div class="faq_value-list">Передаваемые <br>в форме</div>
+                    <div class="faq_value-list">Отображаемые <br>в форме</div>
+                </div>
               <draggable
                       tag="ul"
                       :list="data.options.options"
@@ -150,19 +220,19 @@
                 <li v-for="(item, index) in data.options.options" :key="index">
                   <el-checkbox :label="item.value" style="margin-right: 5px;">
                     <el-input
-                            :style="{'width': data.options.showLabel? '90px': '180px' }"
+                            :style="{'width': data.options.showLabel? '120px': '240px' }"
                             size="mini"
                             v-model="item.value"
                     ></el-input>
                     <el-input
-                            style="width:90px;"
+                            style="width: 120px;"
                             size="mini"
                             v-if="data.options.showLabel"
                             v-model="item.label"
                     ></el-input>
                   </el-checkbox>
                   <i class="drag-item" style="font-size: 16px;margin: 0 5px;cursor: move;">
-                    <i class="iconfont icon-icon_bars"></i>
+                    <i class="iconfont icon-bars"></i>
                   </i>
                   <el-button
                           @click="handleOptionsRemove(index)"
@@ -183,97 +253,11 @@
         </template>
       </el-form-item>
 
-<!--      <el-form-item label="Remote Date" v-if="data.type=='cascader'">-->
-<!--        <div>-->
-<!--          <el-input size="mini" style v-model="data.options.remoteFunc">-->
-<!--            <template slot="prepend">Remote Function</template>-->
-<!--          </el-input>-->
-<!--          <el-input size="mini" style v-model="data.options.props.value">-->
-<!--            <template slot="prepend">Value</template>-->
-<!--          </el-input>-->
-<!--          <el-input size="mini" style v-model="data.options.props.label">-->
-<!--            <template slot="prepend">Label</template>-->
-<!--          </el-input>-->
-<!--          <el-input size="mini" style v-model="data.options.props.children">-->
-<!--            <template slot="prepend">Sub-Option</template>-->
-<!--          </el-input>-->
-<!--        </div>-->
-<!--      </el-form-item>-->
 
-      <el-form-item
-              label="Значение по умолчанию"
-              v-if="Object.keys(data.options).indexOf('defaultValue')>=0 && (data.type === 'textarea' || data.type === 'input' || data.type==='rate' || data.type==='color' || data.type==='switch')"
-      >
-        <el-input
-                v-if="data.type==='textarea'"
-                type="textarea"
-                :rows="5"
-                v-model="data.options.defaultValue"
-        ></el-input>
-        <el-input v-if="data.type==='input'" v-model="data.options.defaultValue"></el-input>
-        <el-rate
-                v-if="data.type === 'rate'"
-                style="display:inline-block;vertical-align: middle;"
-                :max="data.options.max"
-                :allow-half="data.options.allowHalf"
-                v-model="data.options.defaultValue"
-        ></el-rate>
-        <el-button
-                type="text"
-                v-if="data.type === 'rate'"
-                style="display:inline-block;vertical-align: middle;margin-left: 10px;"
-                @click="data.options.defaultValue=0"
-        >Clear</el-button>
-        <el-color-picker
-                v-if="data.type === 'color'"
-                v-model="data.options.defaultValue"
-                :show-alpha="data.options.showAlpha"
-        ></el-color-picker>
-        <el-switch v-if="data.type==='switch'" v-model="data.options.defaultValue"></el-switch>
-      </el-form-item>
-
-
+        <!--Дата/время-->
       <template v-if="data.type === 'time' || data.type === 'date'">
-        <el-form-item label="Display type" v-if="data.type === 'date'">
-          <el-select v-model="data.options.type">
-            <el-option value="year"></el-option>
-            <el-option value="month"></el-option>
-            <el-option value="date"></el-option>
-            <el-option value="dates"></el-option>
-            <!-- <el-option value="week"></el-option> -->
-            <el-option value="datetime"></el-option>
-            <el-option value="datetimerange"></el-option>
-            <el-option value="daterange"></el-option>
-          </el-select>
-        </el-form-item>
         <el-form-item label="Range Time" v-if="data.type === 'time'">
           <el-switch v-model="data.options.isRange"></el-switch>
-        </el-form-item>
-        <el-form-item label="Get timeremoteData stamp" v-if="data.type === 'date'">
-          <el-switch v-model="data.options.timestamp"></el-switch>
-        </el-form-item>
-
-        <!--Placeholder-->
-        <el-form-item
-                label="Placeholder"
-                v-if="(!data.options.isRange && data.type === 'time') || (data.type !== 'time' && data.options.type !== 'datetimerange' && data.options.type !== 'daterange')"
-        >
-          <el-input v-model="data.options.placeholder"></el-input>
-        </el-form-item>
-        <el-form-item
-                label="Placeholder of start time"
-                v-if="(data.options.isRange) || data.options.type=='datetimerange' || data.options.type=='daterange'"
-        >
-          <el-input v-model="data.options.startPlaceholder"></el-input>
-        </el-form-item>
-        <el-form-item
-                label="Placeholder of end time"
-                v-if="data.options.isRange || data.options.type=='datetimerange' || data.options.type=='daterange'"
-        >
-          <el-input v-model="data.options.endPlaceholder"></el-input>
-        </el-form-item>
-        <el-form-item label="Format">
-          <el-input v-model="data.options.format"></el-input>
         </el-form-item>
         <el-form-item
                 label="Default Value"
@@ -299,32 +283,10 @@
         </el-form-item>
       </template>
 
-      <template v-if="data.type ==='imgupload'">
-        <el-form-item label="Maximum Upload Count">
-          <el-input type="number" v-model.number="data.options.length"></el-input>
-        </el-form-item>
-        <el-form-item label="Upload with Qiniu Cloud">
-          <el-switch v-model="data.options.isQiniu"></el-switch>
-        </el-form-item>
-        <template v-if="data.options.isQiniu">
-          <el-form-item label="Domain" :required="true">
-            <el-input v-model="data.options.domain"></el-input>
-          </el-form-item>
-          <el-form-item label="A funchtin to get Qiniu Uptoken" :required="true">
-            <el-input v-model="data.options.tokenFunc"></el-input>
-          </el-form-item>
-        </template>
-        <template v-else>
-          <el-form-item label="Picture upload address" :required="true">
-            <el-input v-model="data.options.action"></el-input>
-          </el-form-item>
-        </template>
-      </template>
-
       <!--Картинка-->
       <template v-if="data.bgIcon">
         <el-form-item label="Иконка">
-          <el-select v-model="data.className" placeholder="Выберите иконку" style="width: 100%;">
+          <el-select v-model="data.className" placeholder="Выберите иконку">
             <el-option
                     v-for="icon in icons"
                     class="icon"
@@ -334,120 +296,34 @@
                     :value="icon.value">
             </el-option>
           </el-select>
+            <el-tooltip content="Установить фоновое изображение для элемента." placement="top">
+                <span class="el-prompt el-icon-question" type="primary"></span>
+            </el-tooltip>
         </el-form-item>
       </template>
 
 
-<!--      <template v-if="data.type ==='blank'">-->
-<!--        <el-form-item label="Data Type">-->
-<!--          <el-select v-model="data.options.defaultType">-->
-<!--            <el-option value="String" label="String"></el-option>-->
-<!--            <el-option value="Object" label="Object"></el-option>-->
-<!--            <el-option value="Array" label="Array"></el-option>-->
-<!--          </el-select>-->
-<!--        </el-form-item>-->
-<!--      </template>-->
 
 
-
-      <template v-if="data.type === 'grid'">
-        <el-form-item label="Grid Spacing">
-          <el-input type="number" v-model.number="data.options.gutter"></el-input>
-        </el-form-item>
-        <el-form-item label="Column Configuration">
-          <draggable
-                  tag="ul"
-                  :list="data.columns"
-                  v-bind="{group:{ name:'options'}, ghostClass: 'ghost',handle: '.drag-item'}"
-                  handle=".drag-item"
-          >
-            <li v-for="(item, index) in data.columns" :key="index">
-              <i class="drag-item" style="font-size: 16px;margin: 0 5px;cursor: move;">
-                <i class="iconfont icon-icon_bars"></i>
-              </i>
-              <el-input
-                      placeholder="Grid spans"
-                      size="mini"
-                      style="width: 100px;"
-                      type="number"
-                      v-model.number="item.span"
-              ></el-input>
-
-              <el-button
-                      @click="handleOptionsRemove(index)"
-                      circle
-                      plain
-                      type="danger"
-                      size="mini"
-                      icon="el-icon-minus"
-                      style="padding: 4px;margin-left: 5px;"
-              ></el-button>
-            </li>
-          </draggable>
-          <div style="margin-left: 22px;">
-            <el-button type="text" @click="handleAddColumn">Add Column</el-button>
-          </div>
-        </el-form-item>
-        <el-form-item label="Horizontal Arrangement">
-          <el-select v-model="data.options.justify">
-            <el-option value="start" label="Start"></el-option>
-            <el-option value="end" label="End"></el-option>
-            <el-option value="center" label="Center"></el-option>
-            <el-option value="space-around" label="Space Around"></el-option>
-            <el-option value="space-between" label="Space Between"></el-option>
-          </el-select>
-        </el-form-item>
-        <el-form-item label="Vertical Arrangement">
-          <el-select v-model="data.options.align">
-            <el-option value="top" label="Top"></el-option>
-            <el-option value="middle" label="Middle"></el-option>
-            <el-option value="bottom" label="Bottom"></el-option>
-          </el-select>
-        </el-form-item>
-      </template>
-
-      <template v-if="data.type != 'grid'">
-        <el-form-item label="Атрибуты">
-          <el-checkbox
-                  v-model="data.options.readonly"
-                  v-if="Object.keys(data.options).indexOf('readonly')>=0"
-          >Read Only</el-checkbox>
+      <template v-if="Object.keys(data.options).indexOf('readonly')>=0 && Object.keys(data.options).indexOf('required')>=0">
+        <el-form-item label="Дополнительные атрибуты">
           <el-checkbox
                   v-model="data.options.disabled"
                   v-if="Object.keys(data.options).indexOf('disabled')>=0"
-          >Disabled (нельзя редактировать)</el-checkbox>
+          >Disabled (нельзя редактировать поле)</el-checkbox>
             <el-checkbox
                     v-model="data.options.required"
                     v-if="Object.keys(data.options).indexOf('required')>=0"
             >Required (обязательное поле)</el-checkbox>
-
-
-
-
-          <el-checkbox
-                  v-model="data.options.editable"
-                  v-if="Object.keys(data.options).indexOf('editable')>=0"
-          >Text box is editable</el-checkbox>
-          <el-checkbox
-                  v-model="data.options.clearable"
-                  v-if="Object.keys(data.options).indexOf('clearable')>=0"
-          >Display Clear Button</el-checkbox>
-          <el-checkbox
-                  v-model="data.options.arrowControl"
-                  v-if="Object.keys(data.options).indexOf('arrowControl')>=0"
-          >Display Clear Button</el-checkbox>
-          <el-checkbox
-                  v-model="data.options.isDelete"
-                  v-if="Object.keys(data.options).indexOf('isDelete')>=0"
-          >Deletable</el-checkbox>
-          <el-checkbox
-                  v-model="data.options.isEdit"
-                  v-if="Object.keys(data.options).indexOf('isEdit')>=0"
-          >Editable</el-checkbox>
         </el-form-item>
       </template>
     </el-form>
+
+
   </div>
+    <div v-else>
+        <span>Выберите компонент для редактирования</span>
+    </div>
 </template>
 
 <script>
@@ -477,40 +353,21 @@
         return false;
       },
       icons () {
+        let defaultClass = 'cForm__input-icon ';
         return [
             { name: 'нет', value: '' },
-            { name: 'user2', value: 'user2' },
-            { name: 'user3', value: 'user3' },
-            {
-                name: 'phone1', value: 'phone1'
-            },
-            {
-                name: 'user1', value: 'phone2'
-            },
-            {
-                name: 'phone3', value: 'phone3'
-            },
-            {
-                name: 'message1', value: 'message1'
-            },
-            {
-                name: 'message2', value: 'message2'
-            },
-            {
-                name: 'email1', value: 'email1'
-            },
-            {
-                name: 'email2', value: 'email2'
-            },
-            {
-                name: 'date', value: 'date'
-            },
-            {
-              name: 'clock', value: 'clock'
-            },
-            {
-                name: 'map', value: 'map'
-            }
+            { name: 'user2', value: defaultClass + 'user2' },
+            { name: 'user3', value: defaultClass+ 'user3' },
+            { name: 'phone1', value: defaultClass+ 'phone1'},
+            { name: 'user1', value: defaultClass+ 'phone2' },
+            { name: 'phone3', value: defaultClass+ 'phone3' },
+            { name: 'message1', value: defaultClass+ 'message1' },
+            { name: 'message2', value: defaultClass+ 'message2' },
+            { name: 'email1', value: defaultClass+ 'email1' },
+            { name: 'email2', value: defaultClass+ 'email2' },
+            { name: 'date', value: defaultClass+ 'date' },
+            { name: 'clock', value: defaultClass+ 'clock' },
+            { name: 'map', value: defaultClass+ 'map' }
         ]
       }
     },
@@ -616,4 +473,20 @@
         }
     }
 
+
+    .faq_value {
+        padding-left: 25px;
+        display: flex;
+        &-list {
+            width: 120px;
+            text-align: center;
+            font-size: 14px;
+            line-height: 1.2;
+            color: #000;
+            border-radius: 4px;
+            border: 1px solid #DCDFE6;
+            background: #f8f8f8;
+            padding: 5px 0;
+        }
+    }
 </style>

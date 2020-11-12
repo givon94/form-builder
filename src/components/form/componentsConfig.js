@@ -1,19 +1,33 @@
 export const basicComponents = [
-    // {
-    //     type: 'formName',
-    //     name: 'Перезвоним через 2 минуты',
-    // },
     {
         type: 'title',
-        name: 'Заголовок',
+        name: 'Заголовок формы',
         icon: 'icon-title',
         label: 'Заголовок',
+        classNameLabel: 'cForm_item-wrapper-title',
+        style: {
+            textAlign: 'left',
+            fontSize: 20,
+            fontWeight: 400,
+            color: '#000',
+            marginTop: 0,
+            marginBottom: 10,
+        }
     },
     {
         type: 'someText',
         name: 'Обычный текст',
         icon: 'icon-wenzishezhi',
         label: 'Текст',
+        classNameLabel: 'cForm_item-wrapper-title',
+        style: {
+            textAlign: 'left',
+            fontSize: 20,
+            fontWeight: 400,
+            color: '#000',
+            marginTop: 0,
+            marginBottom: 10,
+        }
     },
     {
         type: 'input',
@@ -23,7 +37,6 @@ export const basicComponents = [
         bgIcon: true,
         className: '',
         options: {
-            name: '',
             defaultValue: '',
             placeholder: '',
             required: false,
@@ -38,7 +51,6 @@ export const basicComponents = [
         bgIcon: true,
         className: '',
         options: {
-            name: '',
             defaultValue: '',
             placeholder: '',
             min: '',
@@ -56,7 +68,6 @@ export const basicComponents = [
         bgIcon: true,
         className: '',
         options: {
-            name: '',
             defaultValue: '',
             multiple: false,
             required: false,
@@ -65,15 +76,19 @@ export const basicComponents = [
             options: [
                 {
                     value: 'Заголовок',
+                    label: 'Заголовок',
                 },
                 {
                     value: 'Опция 1',
+                    label: 'Опция 1',
                 },
                 {
                     value: 'Опция 2',
+                    label: 'Опция 2',
                 },
                 {
                     value: 'Опция 3',
+                    label: 'Опция 3',
                 },
             ],
             remote: false,
@@ -97,10 +112,10 @@ export const basicComponents = [
             name: 'name',
             width: '100%',
             defaultValue: '',
-            required: false,
             dataType: 'string',
             pattern: '',
             placeholder: 'Впишите имя',
+            required: false,
             disabled: false,
         },
     },
@@ -120,6 +135,22 @@ export const basicComponents = [
             pattern: '',
             placeholder: 'Впишите телефон',
             disabled: false,
+            maskValue: '',
+            maskAttr: "'mask': ",
+            maskRules: [
+                {
+                    value: null,
+                    label: 'Нет',
+                },
+                {
+                    value: "'+375(99) 999-99-99'",
+                    label: 'Белорусский номер',
+                },
+                {
+                    value: "'+7(999) 999-99-99'",
+                    label: 'Российский номер',
+                },
+            ],
         },
     },
     {
@@ -165,19 +196,12 @@ export const basicComponents = [
         bgIcon: true,
         className: '',
         options: {
-            defaultValue: '',
-            readonly: false,
-            disabled: false,
-            editable: true,
-            clearable: true,
-            placeholder: '',
-            startPlaceholder: '',
-            endPlaceholder: '',
             type: 'date',
+            defaultValue: '',
+            disabled: false,
+            placeholder: '',
             format: 'yyyy-MM-dd',
-            timestamp: false,
             required: false,
-            width: '',
         },
     },
     {
@@ -188,19 +212,12 @@ export const basicComponents = [
         bgIcon: true,
         className: '',
         options: {
-            defaultValue: '21:19:56',
-            readonly: false,
+            type: 'time',
+            defaultValue: '12:00',
             disabled: false,
-            editable: true,
-            clearable: true,
             placeholder: '',
-            startPlaceholder: '',
-            endPlaceholder: '',
-            isRange: false,
-            arrowControl: true,
-            format: 'HH:mm:ss',
+            format: 'HH:mm',
             required: false,
-            width: '',
         },
     },
     {
@@ -209,21 +226,21 @@ export const basicComponents = [
         icon: 'icon-radio',
         label: 'Заголовок',
         options: {
-            inline: false,
             defaultValue: '',
+            inline: false,
             showLabel: false,
             options: [
                 {
-                    value: 'Option 1',
-                    label: 'Option 1',
+                    value: 'Опция 1',
+                    label: 'Опция 1',
                 },
                 {
-                    value: 'Option 2',
-                    label: 'Option 2',
+                    value: 'Опция 2',
+                    label: 'Опция 2',
                 },
                 {
-                    value: 'Option 3',
-                    label: 'Option 3',
+                    value: 'Опция 3',
+                    label: 'Опция 3',
                 },
             ],
             required: false,
@@ -235,7 +252,6 @@ export const basicComponents = [
                 label: 'label',
             },
             remoteFunc: '',
-            disabled: false,
         },
     },
     {
@@ -247,16 +263,18 @@ export const basicComponents = [
             inline: false,
             defaultValue: [],
             showLabel: false,
-            name: 'checkbox',
             options: [
                 {
-                    value: 'Option 1',
+                    value: 'Опция 1',
+                    label: 'Опция 1',
                 },
                 {
-                    value: 'Option 2',
+                    value: 'Опция 2',
+                    label: 'Опция 2',
                 },
                 {
-                    value: 'Option 3',
+                    value: 'Опция 3',
+                    label: 'Опция 3',
                 },
             ],
             required: false,
@@ -268,7 +286,6 @@ export const basicComponents = [
                 label: 'label',
             },
             remoteFunc: '',
-            disabled: false,
         },
     },
     {
@@ -283,8 +300,6 @@ export const basicComponents = [
             min: 0,
             max: 100,
             step: 1,
-            showInput: false,
-            range: false,
             width: '',
         },
     },

@@ -3,10 +3,10 @@
             class="widget-view"
             v-if="element && element.key"
             :class="{active: selectWidget.key === element.key, 'is_req': element.options.required}"
-            :label="element.name"
             @click.stop="handleSelectWidget(index)"
     >
 
+    <span class="widget-view-title" v-text="'*' + element.name"></span>
     <items-template
             v-if="element && element.key"
             :key="element.key"
@@ -16,8 +16,6 @@
             :data="data"
     >
     </items-template>
-
-
         <div class="widget-view-action" v-if="selectWidget.key === element.key">
             <i title="Копировать" class="iconfont icon-clone" @click.stop="handleWidgetClone(index)"></i>
             <i title="Удалить" class="iconfont icon-delete" @click.stop="handleWidgetDelete(index)"></i>
@@ -108,3 +106,10 @@
         }
     };
 </script>
+
+
+<style>
+    /*.cForm_item-wrapper {*/
+    /*    margin: -20px 0;*/
+    /*}*/
+</style>

@@ -57,13 +57,13 @@
                                         </a>
                                     </li>
                                     <li class="main__header-link">
-                                        <a href="#">
+                                        <a href="#" @click="downloadForm">
                                             <i class="icon iconfont icon-download"></i>
                                             <span>Скачать форму</span>
                                         </a>
                                     </li>
                                     <li class="main__header-link">
-                                        <a href="#">
+                                        <a href="#" @click="handleClear">
                                             <i class="icon iconfont icon-delete"></i>
                                             <span>Удалить форму</span>
                                         </a>
@@ -95,15 +95,15 @@
 
                         </section>
 
-
-                        <el-aside class="widget-config-container" style="width: 360px;">
+                        <!--Меню справа-->
+                        <el-aside class="aside-right widget-config-container" style="width: 370px;">
                             <el-container>
-                                <el-header height="45px">
+                                <el-header class="aside-right-header" height="45px">
                                     <div
                                             class="config-tab"
                                             :class="{active: configTab ==='form'}"
                                             @click="handleConfigSelect('form')"
-                                    >Настройки формы</div>
+                                    >Общие настройки</div>
                                     <div
                                             class="config-tab"
                                             :class="{active: configTab ==='widget'}"
@@ -205,6 +205,10 @@
               widgetForm: {
                   list: [],
                   config: {
+                      formValue: 'Название формы',
+                      labelBlockPaddingColumn: 10,
+                      labelBlockPaddingRow: 0,
+                      addLabelTitle: true,
                       formStyle: 'basic',
                       formMaxWidth: 100,
                       formBgColor: '#fff',
@@ -212,19 +216,36 @@
                       formBorderWidth: 0,
                       formBorderStyle: 'solid',
                       formBorderColor: '#000',
-                      formShadowStyle: 'no',
+                      formShadow: 'cForm-shadow1',
+                      formPaddingVertical: 40,
+                      formPaddingHorizontal: 40,
                       inputWidth: 100,
                       inputHeight: 50,
                       inputBgColor: '#fff',
+                      inputTitleWeight: 400,
+                      inputTitleSize: 18,
                       inputColor: '#333',
                       inputBorderRadius: 4,
                       inputBorderWidth: 1,
                       inputBorderStyle: 'solid',
                       inputBorderColor: '#d9d9d9',
                       inputShadowStyle: 'no',
-                      labelTitleWeight: 'normal',
+                      labelWidth: 200,
+                      labelTitleWeight: 400,
                       labelTitleSize: 18,
-                      labelTitleColor: '#333'
+                      labelTitleColor: '#333',
+                      buttonPosition: 'left',
+                      buttonWidth: 20,
+                      buttonHeight: 15,
+                      buttonBgColor: '#3f51b5',
+                      buttonTextSize: 18,
+                      buttonTextWeight: 400,
+                      buttonTextColor: '#fff',
+                      buttonBorderRadius: 4,
+                      buttonBorderWidth: 0,
+                      buttonBorderStyle: 'solid',
+                      buttonBorderColor: '#000',
+                      buttonAnimation: true,
                   }
               },
               configTab: "form",
@@ -246,6 +267,39 @@
           };
         },
         methods: {
+            handleClear() {
+                this.widgetForm = {
+                    list: [],
+                    config: {
+                        addLabelTitle: true,
+                        formStyle: 'basic',
+                        formMaxWidth: 100,
+                        formBgColor: '#fff',
+                        formBorderRadius: 0,
+                        formBorderWidth: 0,
+                        formBorderStyle: 'solid',
+                        formBorderColor: '#000',
+                        formShadow: 'cForm-shadow1',
+                        formPaddingVertical: 40,
+                        formPaddingHorizontal: 40,
+                        inputWidth: 100,
+                        inputHeight: 50,
+                        inputBgColor: '#fff',
+                        inputColor: '#333',
+                        inputValidate: false,
+                        inputBorderRadius: 4,
+                        inputBorderWidth: 1,
+                        inputBorderStyle: 'solid',
+                        inputBorderColor: '#d9d9d9',
+                        inputShadowStyle: 'no',
+                        labelTitleWeight: 'normal',
+                        labelTitleSize: 18,
+                        labelTitleColor: '#333'
+                    }
+                };
+
+                this.widgetFormSelect = {};
+            },
             handleConfigSelect(value) {
               this.configTab = value;
             },
@@ -255,19 +309,33 @@
             handleMove() {
               return true;
             },
+            downloadForm() {
+                let form = document.querySelector('.cForm-wrapper');
+
+                if (form) {
+                    form = form.outerHTML;
+                    this.$store.dispatch('saveForm', form)
+                }
+            },
         },
     }
 </script>
 
 
 <style lang="scss">
+    @-ms-viewport { width: 1200; }
+    @-webkit-viewport { width: 1200; }
+    @-moz-viewport { width: 1200; }
+    @-o-viewport { width: 1200; }
+    @viewport { width: 1200; }
+
     html, body {
         height: 100% !important;
     }
 
 
     #app {
-        font-family: "Source Sans Pro", "Helvetica Neue", Arial, sans-serif;
+        font-family: "Source Sans Pro", "Helvetica Neue", Arial, sans-serif !important;
         -webkit-font-smoothing: antialiased;
         -moz-osx-font-smoothing: grayscale;
         color: #2c3e50;
@@ -306,12 +374,13 @@
             -webkit-box-direction: normal;
         }
         &__main {
+            //overflow: auto;
+            overflow: hidden;
             position: relative;
             padding: 0;
             display: block;
             flex: 1;
             flex-basis: auto;
-            overflow: auto;
             &-container {
                 position: absolute;
                 top: 0;
@@ -333,7 +402,8 @@
     .aside {
         &-left {
             width: 220px;
-            overflow: auto;
+            overflow-x: hidden;
+            overflow-y: auto;
             -ms-flex-negative: 0;
             flex-shrink: 0;
             scrollbar-color: rgba(144,147,153,.3) #fff;
@@ -342,6 +412,7 @@
                 background: rgba(144,147,153,.3);
             }
             &::-webkit-scrollbar {
+                background: rgba(144,147,153,.1);
                 -webkit-appearance: none;
             }
             &::-webkit-scrollbar:vertical {
@@ -350,22 +421,45 @@
             }
         }
         &-right {
-            width: 300px;
-            overflow: auto;
-            -ms-flex-negative: 0;
-            flex-shrink: 0;
             scrollbar-color: rgba(144,147,153,.3) #fff;
             &::-webkit-scrollbar-thumb {
                 border-radius: 6px;
                 background: rgba(144,147,153,.3);
             }
             &::-webkit-scrollbar {
-                background: rgba(144,147,153,.3);
+                background: rgba(144,147,153,.1);
                 -webkit-appearance: none;
             }
             &::-webkit-scrollbar:vertical {
                 width: 5px;
                 border-radius: 6px;
+            }
+            &-header {
+                position: sticky;
+                top: 0;
+                background: #fff;
+                border-bottom: solid 2px #e4e7ed;
+                padding: 0 !important;
+                user-select: none;
+                z-index: 9999;
+                & .config-tab {
+                    height: 45px;
+                    line-height: 45px;
+                    display: inline-block;
+                    width: 50%;
+                    text-align: center;
+                    font-size: 14px;
+                    font-weight: 600;
+                    position: relative;
+                    cursor: pointer;
+                    white-space: nowrap;
+                    text-overflow: ellipsis;
+                    overflow: hidden;
+                    &.active {
+                        background: #409EFF;
+                        color: #fff;
+                    }
+                }
             }
         }
         &__block {
@@ -443,14 +537,30 @@
             text-align: right;
             flex-shrink: 0;
             padding: 20px;
+            user-select: none;
+            overflow: auto;
+            scrollbar-color: rgba(144,147,153,.3) #fff;
+            &::-webkit-scrollbar-thumb {
+                border-radius: 6px;
+                background-color: rgba(144,147,153,.3);
+            }
+            &::-webkit-scrollbar {
+                -webkit-appearance: none;
+            }
+            &::-webkit-scrollbar:horizontal {
+                height: 5px;
+                border-radius: 6px;
+            }
             &-links {
                 display: flex;
                 align-items: center;
                 justify-content: flex-start;
+                margin: 0 -15px !important;
             }
             &-link {
                 display: block;
-                margin-right: 20px;
+                margin: 0 15px;
+                white-space: nowrap;
                 &>a {
                     font-size: 18px;
                     display: block;
@@ -494,7 +604,6 @@
             &-wrapper {
                 background: #fff;
                 position: relative;
-                min-height: 600px;
                 height: 100%;
                 overflow: hidden;
                 margin: 10px;
@@ -503,12 +612,25 @@
             &-form {
                 &-edit {
                     height: 100%;
+                    & .cForm_item {
+                        padding: 0 !important;
+                    }
                 }
                 &-view {
+                    position: relative;
                     height: 100%;
                     display: flex;
                     justify-content: center;
                     align-items: center;
+                    user-select: none;
+                    /*&:before {*/
+                    /*    content: '';*/
+                    /*    position: absolute;*/
+                    /*    left: 0;*/
+                    /*    right: 0;*/
+                    /*    bottom: 0;*/
+                    /*    top: 0;*/
+                    /*}*/
                 }
                 &-empty {
                     position: absolute;
@@ -516,9 +638,9 @@
                     top: 50%;
                     transform: translate(-50%, -50%);
                     text-align: center;
-                    font-size: 26px;
+                    font-size: 1.3vw;
                     line-height: 1.5;
-                    opacity: .8;
+                    opacity: .7;
                 }
             }
         }
@@ -535,6 +657,12 @@
                 }
             }
         }
+        &-edit {
+            display: block !important;
+            & .cForm_item {
+                width: 100% !important;
+            }
+        }
     }
 
     /*Поля формы*/
@@ -549,6 +677,12 @@
             right: 0;
             bottom: 0;
             top: 0;
+        }
+        &-title {
+            font-size: 12px;
+            margin-bottom: 10px;
+            display: block;
+            color: #409EFF;
         }
         &.active {
             border: 3px solid #409EFF;
@@ -632,77 +766,6 @@
         opacity: .8;
     }
 
-    .cForm_item input, textarea, select {
-        font-size: 18px;
-        width: 220px;
-        color: #212121;
-        border: 1px solid #d9d9d9;
-        border-radius: 5px;
-        padding-left: 15px;
-        &::-webkit-input-placeholder {
-            color: #999;
-        }
-        &:-ms-input-placeholder {
-            color: #999;
-        }
-        &::-moz-placeholder {
-            color: #999;
-            opacity: 1;
-        }
-        &:-moz-placeholder {
-            color: #999;
-            opacity: 1;
-        }
-        &:focus {
-            outline: none;
-        }
-    }
-
-    .cForm_item input, textarea {
-        &:focus {
-            outline: none;
-            &::-webkit-input-placeholder {
-                color: transparent
-            }
-            &::-moz-placeholder {
-                color: transparent
-            }
-            &:-moz-placeholder {
-                color: transparent
-            }
-            &:-ms-input-placeholder {
-                color: transparent
-            }
-        }
-    }
-
-    .cForm_item textarea  {
-        resize: none;
-    }
-
-
-
-    /*Настройки формы*/
-    .cForm {
-        &.horizontal {
-            & .cForm_item {
-                display: flex;
-                align-items: center;
-                &-text {
-                    margin: 0 15px 0 0;
-                }
-            }
-        }
-        &.basic {
-            & .cForm_item {
-                &-text {
-                    margin: 0 0 10px 0;
-                }
-            }
-        }
-    }
-
-
     .el-form-item__label {
         line-height: 1.3 !important;
     }
@@ -714,8 +777,8 @@
         line-height: 30px;
         border-top: 1px solid #e0e0e0;
         font-size: 12px;
-        text-align: right;
         color: #409EFF;
         background: #fafafa;
+        padding: 0 10px;
     }
 </style>

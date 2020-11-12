@@ -1,9 +1,12 @@
 <template>
     <div class="main__block-form main__block-form-view">
-        <div class="cForm-wrapper" :class="data.config.formShadowStyle">
+        <p v-if="data.list.length === 0" class="main__block-form-empty">Для создания формы перейдите в режим правки</p>
+        <form v-else class="cForm-wrapper" :class="data.config.formShadow" :style="styleForm" @submit.prevent>
             <div class="cForm" :class="[data.config.formStyle]">
-                <template v-for="(element, index) in data.list">
+                <input type="hidden" name="form_name" v-model="data.config.formValue">
+                <template class="cForm_item-wrapper" v-for="(element, index) in data.list">
                     <items-template
+                            :class="element.classNameLabel ? 'cForm_item-wrapper-title' : 'cForm_item-wrapper'"
                             v-if="element && element.key"
                             :key="element.key"
                             :element="element"
@@ -13,7 +16,7 @@
                     </items-template>
                 </template>
             </div>
-        </div>
+        </form>
     </div>
 </template>
 
@@ -26,5 +29,17 @@
         components: {
             itemsTemplate
         },
+        computed: {
+            styleForm() {
+                let config = this.data.config;
+                return {
+                    maxWidth: config.formMaxWidth,
+                    padding: `${config.formPaddingVertical}px ${config.formPaddingHorizontal}px`,
+                    backgroundColor: config.formBgColor,
+                    borderRadius: `${config.formBorderRadius}px`,
+                    border: `${config.formBorderWidth}px ${config.formBorderStyle} ${config.formBorderColor}`,
+                }
+            }
+        }
     }
 </script>
