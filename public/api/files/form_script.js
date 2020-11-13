@@ -30,6 +30,7 @@ $(document).ready(function() {
 	    data.push({name: 'ref', value: ref});
 	    $.ajax({
 	        url: 'php/mail.php',
+	        headers: {'X-Alt-Referer': location.href, 'use-root-domain' : true},
 	        type: 'POST',
 	        data: data,
 	        beforeSend: function (data) {

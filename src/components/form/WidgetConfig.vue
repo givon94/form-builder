@@ -296,7 +296,6 @@
       </template>
     </el-form>
 
-
   </div>
     <div v-else>
         <span>Выберите компонент для редактирования</span>
@@ -367,12 +366,6 @@
             value: 'Новая опция'
           });
         }
-      },
-      handleAddColumn() {
-        this.data.columns.push({
-          span: "",
-          list: []
-        });
       },
       handleSelectMuliple(value) {
         if (value) {

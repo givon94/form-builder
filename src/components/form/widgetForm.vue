@@ -65,8 +65,8 @@
       },
       handleWidgetAdd(evt) {
         const newIndex = evt.newIndex;
-        const to = evt.to;
-        console.log(to);
+        // const to = evt.to;
+        // console.log(to);
 
         //key
         const key = genUniqKey();
@@ -98,71 +98,7 @@
           });
         }
 
-        if (this.data.list[newIndex].type === "grid") {
-          this.$set(this.data.list, newIndex, {
-            ...this.data.list[newIndex],
-            columns: this.data.list[newIndex].columns.map(item => ({ ...item }))
-          });
-        }
-
         this.selectWidget = this.data.list[newIndex];
-      },
-      handleWidgetColAdd($event, row, colIndex) {
-        console.log("coladd", $event, row, colIndex);
-        const newIndex = $event.newIndex;
-        const oldIndex = $event.oldIndex;
-        const item = $event.item;
-
-        if (item.className.indexOf("data-grid") >= 0) {
-
-          item.tagName === "DIV" &&
-          this.data.list.splice(
-                  oldIndex,
-                  0,
-                  row.columns[colIndex].list[newIndex]
-          );
-
-          row.columns[colIndex].list.splice(newIndex, 1);
-
-          return false;
-        }
-
-        console.log("from", item);
-
-        const key = genUniqKey();
-
-        this.$set(row.columns[colIndex].list, newIndex, {
-          ...row.columns[colIndex].list[newIndex],
-          options: {
-            ...row.columns[colIndex].list[newIndex].options,
-            remoteFunc: "func_" + key
-          },
-          key,
-
-
-          model: row.columns[colIndex].list[newIndex].type + "_" + key,
-          rules: []
-        });
-
-        if (
-                row.columns[colIndex].list[newIndex].type === "radio" ||
-                row.columns[colIndex].list[newIndex].type === "checkbox" ||
-                row.columns[colIndex].list[newIndex].type === "select"
-        ) {
-          this.$set(row.columns[colIndex].list, newIndex, {
-            ...row.columns[colIndex].list[newIndex],
-            options: {
-              ...row.columns[colIndex].list[newIndex].options,
-              options: row.columns[colIndex].list[newIndex].options.options.map(
-                      item => ({
-                        ...item
-                      })
-              )
-            }
-          });
-        }
-
-        this.selectWidget = row.columns[colIndex].list[newIndex];
       },
       handleWidgetDelete(index) {
         if (this.data.list.length - 1 === index) {
