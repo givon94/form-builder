@@ -75,8 +75,9 @@ export const basicComponents = [
             showLabel: false,
             options: [
                 {
-                    value: 'Заголовок',
+                    title: true,
                     label: 'Заголовок',
+                    value: 'Заголовок'
                 },
                 {
                     value: 'Опция 1',
@@ -187,6 +188,9 @@ export const basicComponents = [
             pattern: '',
             placeholder: 'Сообщение',
         },
+        style: {
+            height: '50'
+        }
     },
     {
         type: 'date',

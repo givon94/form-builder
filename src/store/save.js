@@ -1,16 +1,14 @@
 import Axios from "axios";
 
 export default {
-    state: {
-        findings: []
-    },
     actions: {
-        async saveForm (html) {
+        async saveForm ({commit}, html) {
         Axios
-            .post('api/builderForm.php',{pageName: 'sad', html })
+            .post('api/builderForm.php', {'html': html} )
             .then(r => r.data)
             .then(response => {
                 const fileName = response;
+                console.log(response)
                 Axios
                     .get('api/' + fileName, {responseType: 'blob'})
                     .then(response => {
@@ -22,18 +20,18 @@ export default {
                         fileLink.click();
                     })
                     .then(() => {
-                        console.log('delete')
                         Axios.post('api/deleteForm.php', {fileName: fileName})
+                        commit('setSuccess', 'Форма успешно скачалась')
                     })
                     .catch(error => {
-                        console.log('Error')
+                        commit('setError', 'Произошла ошибка')
                         throw error
                     });
             })
             .catch(error => {
-                console.log('Error')
+                commit('setError', 'Произошла ошибка')
                 throw error
             });
-        }
+        },
     },
 }

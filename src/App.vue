@@ -117,10 +117,9 @@
                                 </el-main>
                             </el-container>
                         </el-aside>
-
-
                     </div>
                 </main>
+
                 <footer class="footer">
                     <p class="white--text">&copy; {{ new Date().getFullYear() }}</p>
                 </footer>
@@ -230,7 +229,9 @@
                       inputBorderStyle: 'solid',
                       inputBorderColor: '#d9d9d9',
                       inputShadowStyle: 'no',
+                      labelInlinePosition: 'align_center',
                       labelWidth: 200,
+                      labelTitleWidth: 0,
                       labelTitleWeight: 400,
                       labelTitleSize: 18,
                       labelTitleColor: '#333',
@@ -263,7 +264,7 @@
               uploadEditor: null,
               jsonCopyValue: "",
               jsonClipboard: null,
-              codeActiveName: "vue"
+              codeActiveName: "vue",
           };
         },
         methods: {
@@ -271,6 +272,9 @@
                 this.widgetForm = {
                     list: [],
                     config: {
+                        formValue: 'Название формы',
+                        labelBlockPaddingColumn: 10,
+                        labelBlockPaddingRow: 0,
                         addLabelTitle: true,
                         formStyle: 'basic',
                         formMaxWidth: 100,
@@ -285,20 +289,36 @@
                         inputWidth: 100,
                         inputHeight: 50,
                         inputBgColor: '#fff',
+                        inputTitleWeight: 400,
+                        inputTitleSize: 18,
                         inputColor: '#333',
-                        inputValidate: false,
                         inputBorderRadius: 4,
                         inputBorderWidth: 1,
                         inputBorderStyle: 'solid',
                         inputBorderColor: '#d9d9d9',
                         inputShadowStyle: 'no',
-                        labelTitleWeight: 'normal',
+                        labelHorizontalInline: 'align-center',
+                        labelWidth: 200,
+                        labelTitleWidth: 0,
+                        labelTitleWeight: 400,
                         labelTitleSize: 18,
-                        labelTitleColor: '#333'
+                        labelTitleColor: '#333',
+                        buttonPosition: 'left',
+                        buttonWidth: 20,
+                        buttonHeight: 15,
+                        buttonBgColor: '#3f51b5',
+                        buttonTextSize: 18,
+                        buttonTextWeight: 400,
+                        buttonTextColor: '#fff',
+                        buttonBorderRadius: 4,
+                        buttonBorderWidth: 0,
+                        buttonBorderStyle: 'solid',
+                        buttonBorderColor: '#000',
+                        buttonAnimation: true,
                     }
                 };
-
                 this.widgetFormSelect = {};
+                this.$store.dispatch('setSuccess', 'Форма успешно удалена')
             },
             handleConfigSelect(value) {
               this.configTab = value;
@@ -315,6 +335,8 @@
                 if (form) {
                     form = form.outerHTML;
                     this.$store.dispatch('saveForm', form)
+                } else {
+                    this.$store.dispatch('setWarning', 'Сначала создайте форму')
                 }
             },
         },
@@ -341,6 +363,20 @@
         color: #2c3e50;
         min-height: 100%;
         height: 100%;
+    }
+
+    .el-scrollbar__view {
+        font-family: "Source Sans Pro", "Helvetica Neue", Arial, sans-serif !important;
+    }
+
+    .el-message__content {
+        font-family: "Source Sans Pro", "Helvetica Neue", Arial, sans-serif !important;
+        font-size: 22px !important;
+    }
+
+    .el-tooltip__popper {
+        font-family: "Source Sans Pro", "Helvetica Neue", Arial, sans-serif !important;
+        font-size: 14px !important;
     }
 
     .header {
@@ -668,7 +704,7 @@
     /*Поля формы*/
     .widget-view {
         position: relative;
-        padding: 20px 50px;
+        padding: 20px 70px;
         border: 3px solid transparent;
         &:before {
             content: '';
@@ -692,12 +728,17 @@
             left: -2px;
             top: -2px;
             bottom: -18px;
-            height: 28px;
-            line-height: 28px;
+            //height: 28px;
+            //line-height: 28px;
+            text-align: center;
+            width: 40px;
+            height: 40px;
+            line-height: 40px;
             background: #409EFF;
             z-index: 9;
             &>i {
-                font-size: 14px;
+                font-size: 24px;
+                //font-size: 14px;
                 color: #fff;
                 margin: 0 5px;
                 cursor: move;

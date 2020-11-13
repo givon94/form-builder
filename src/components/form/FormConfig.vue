@@ -52,7 +52,7 @@
           </el-form-item>
 
           <el-form-item label="Размер обводки">
-            <el-slider v-model="data.formBorderWidth"></el-slider>
+            <el-slider :max="15" v-model="data.formBorderWidth"></el-slider>
           </el-form-item>
 
           <el-form-item label="Стиль обводки">
@@ -94,6 +94,19 @@
             <el-input v-model="data.labelWidth"></el-input>
           </el-form-item>
 
+          <el-form-item v-if="data.formStyle === 'inline'" label="Выравнивание">
+            <el-radio-group v-model="data.labelInlinePosition">
+              <el-radio-button label="align_top">Вверху</el-radio-button>
+              <el-radio-button label="align_center">Центру</el-radio-button>
+              <el-radio-button label="align_bottom">Низу</el-radio-button>
+              <el-radio-button label="align_baseline">Базовой линии</el-radio-button>
+            </el-radio-group>
+            <el-tooltip content="Выравнивание элементов относительно друг друга" placement="top">
+              <span class="el-prompt el-icon-question" type="primary"></span>
+            </el-tooltip>
+          </el-form-item>
+
+
           <el-form-item label="Высота">
             <el-input v-model="data.inputHeight"></el-input>
           </el-form-item>
@@ -119,7 +132,7 @@
           </el-form-item>
 
           <el-form-item label="Размер текста">
-            <el-slider v-model="data.inputTitleSize"></el-slider>
+            <el-slider :max="40" v-model="data.inputTitleSize"></el-slider>
           </el-form-item>
 
           <el-form-item label="Цвет текста">
@@ -140,7 +153,7 @@
           </el-form-item>
 
           <el-form-item label="Размер обводки">
-            <el-slider v-model="data.inputBorderWidth"></el-slider>
+            <el-slider :max="15" v-model="data.inputBorderWidth"></el-slider>
           </el-form-item>
 
           <el-form-item label="Цвет обводки">
@@ -150,15 +163,19 @@
           <el-form-item label="Тень">
             <el-select v-model="data.inputShadowStyle" placeholder="Тень">
               <el-option label="Нет" value="no"></el-option>
-              <el-option label="Вариант 1" value="v1"></el-option>
-              <el-option label="Вариант 2" value="v2"></el-option>
-              <el-option label="Вариант 3" value="v3"></el-option>
+              <el-option label="Вариант 1" value="cForm-input-shadow1"></el-option>
+              <el-option label="Вариант 2" value="cForm-input-shadow2"></el-option>
+              <el-option label="Вариант 3" value="cForm-input-shadow3"></el-option>
             </el-select>
           </el-form-item>
 
 
         </el-tab-pane>
         <el-tab-pane label="Текст">
+          <el-form-item label="Максимальная ширина, %">
+            <el-slider v-model="data.labelTitleWidth"></el-slider>
+          </el-form-item>
+
 
           <el-form-item label="Начертание">
             <el-radio-group v-model="data.labelTitleWeight">
@@ -170,7 +187,7 @@
 
 
           <el-form-item label="Размер текста заголовков полей">
-            <el-slider v-model="data.labelTitleSize"></el-slider>
+            <el-slider :max="40" v-model="data.labelTitleSize"></el-slider>
           </el-form-item>
 
           <el-form-item label="Цвет заголовков полей">
@@ -201,7 +218,7 @@
           </el-form-item>
 
           <el-form-item label="Размер текста">
-            <el-slider v-model="data.buttonTextSize"></el-slider>
+            <el-slider :max="40" v-model="data.buttonTextSize"></el-slider>
           </el-form-item>
 
           <el-form-item label="Начертание">
@@ -222,7 +239,7 @@
           </el-form-item>
 
           <el-form-item label="Размер обводки">
-            <el-slider v-model="data.buttonBorderWidth"></el-slider>
+            <el-slider :max="15" v-model="data.buttonBorderWidth"></el-slider>
           </el-form-item>
 
           <el-form-item label="Стиль обводки">

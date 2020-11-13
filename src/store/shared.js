@@ -1,52 +1,58 @@
+import { Message } from 'element-ui';
+
 export default {
+        components: {
+        Message
+    },
     state: {
-        loading: false,
+        warning: null,
         error: null,
         success: null
     },
     mutations: {
-        setLoading (state, payload) {
-            state.loading = payload
-        },
         setError (state, payload) {
             state.error = payload
+
+            Message({
+                showClose: true,
+                message: payload,
+                type: 'error'
+            });
         },
         setSuccess (state, payload) {
             state.success = payload
+
+            Message({
+                showClose: true,
+                message: payload,
+                type: 'success'
+            });
         },
-        clearError (state) {
-            state.error = null
+        setWarning (state, payload) {
+            state.warning = payload
+
+            Message({
+                showClose: true,
+                message: payload,
+                type: 'warning'
+            });
         },
-        clearSuccess (state) {
-            state.success = null
-        }
     },
     actions: {
-        setLoading ({commit}, payload) {
-            commit('setLoading', payload)
-        },
         setError ({commit}, payload) {
+            console.log('commit' + commit)
+            console.log('payload' + payload)
             commit('setError', payload)
         },
-        setSuccess ({commit}) {
-            commit('clearSuccess')
+        setSuccess ({commit}, payload) {
+            console.log('commit' + commit)
+            console.log('payload' + payload)
+            commit('setSuccess', payload)
         },
-        clearSuccess ({commit}) {
-            commit('clearSuccess')
+        setWarning ({commit}, payload) {
+            console.log('commit' + commit)
+            console.log('payload' + payload)
+            commit('setWarning', payload)
         },
-        clearError ({commit}) {
-            commit('clearError')
-        }
     },
-    getters: {
-        loading (state) {
-            return state.loading
-        },
-        error (state) {
-            return state.error
-        },
-        success (state) {
-            return state.success
-        }
-    }
 }

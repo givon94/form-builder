@@ -3,7 +3,7 @@ import App from './App.vue'
 import store from './store'
 import router from './router'
 import axios from 'axios'
-import ElementUI from 'element-ui';
+import ElementUI from 'element-ui'
 import locale from 'element-ui/lib/locale/lang/en'
 const VueInputMask = require('vue-inputmask').default
 
@@ -14,7 +14,7 @@ import './styles/style.css'
 import 'element-ui/lib/theme-chalk/index.css';
 
 Vue.use(ElementUI, { size: 'small', locale });
-Vue.use(VueInputMask)
+Vue.use(VueInputMask);
 
 new Vue({
   store,

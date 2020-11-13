@@ -22,7 +22,7 @@
 
                 <input
                         type="text"
-                        :class="element.className"
+                        :class="[element.className, data.config.inputShadowStyle]"
                         v-model="element.options.defaultValue"
                         :name="element.model"
                         :placeholder="element.options.placeholder"
@@ -43,7 +43,7 @@
 
                 <input
                         type="number"
-                        :class="element.className"
+                        :class="[element.className, data.config.inputShadowStyle]"
                         v-model="element.options.defaultValue"
                         :name="element.model"
                         :placeholder="element.options.placeholder"
@@ -66,7 +66,7 @@
 
                 <input
                         type="text"
-                        :class="element.className"
+                        :class="[element.className, data.config.inputShadowStyle]"
                         v-model="element.options.defaultValue"
                         :name="element.options.name"
                         :style="styleInput"
@@ -88,7 +88,7 @@
                         type="tel"
                         :name="element.options.name"
                         :data-inputmask="element.options.maskValue !== '' ? element.options.maskAttr + element.options.maskValue : ''"
-                        :class="element.className"
+                        :class="[element.className, data.config.inputShadowStyle]"
                         v-model="element.options.defaultValue"
                         :style="styleInput"
                         :placeholder="element.options.placeholder"
@@ -108,7 +108,7 @@
 
                 <input
                         type="email"
-                        :class="element.className"
+                        :class="[element.className, data.config.inputShadowStyle]"
                         v-model="element.options.defaultValue"
                         :name="element.options.name"
                         :style="styleInput"
@@ -128,10 +128,10 @@
 
                 <textarea
                         type="textarea"
-                        :class="element.className"
+                        :class="[element.className, data.config.inputShadowStyle]"
                         :name="element.model"
                         v-model="element.options.defaultValue"
-                        :style="styleInput"
+                        :style="[styleInput, styleTextarea]"
                         :disabled="element.options.disabled"
                         :required="element.options.required"
                         :placeholder="element.options.placeholder"
@@ -142,7 +142,7 @@
 
         <!--Чекбокс-->
         <template v-if="element.type === 'checkbox'">
-            <div class="cForm_item" :style="styleLabelBlock">
+            <div class="cForm_item cForm_item-checkbox" :style="styleLabelBlock">
                 <div class="cForm_item-text" v-if="data.config.addLabelTitle" :style="styleLabel">
                     <p>{{ element.label }}<span v-if="element.options.required"> *</span></p>
                 </div>
@@ -167,7 +167,7 @@
 
         <!--Радио кнопка-->
         <template v-if="element.type === 'radio'">
-            <div class="cForm_item" :style="styleLabelBlock">
+            <div class="cForm_item cForm_item-radio" :style="styleLabelBlock">
                 <div class="cForm_item-text" v-if="data.config.addLabelTitle" :style="styleLabel">
                     <p>{{ element.label }}<span v-if="element.options.required"> *</span></p>
                 </div>
@@ -201,7 +201,7 @@
                 <input
                         type="date"
                         :name="element.model"
-                        :class="element.className"
+                        :class="[element.className, data.config.inputShadowStyle]"
                         v-model="element.options.defaultValue"
                         :placeholder="element.options.placeholder"
                         :style="styleInput"
@@ -221,7 +221,7 @@
                 <input
                         type="time"
                         :name="element.model"
-                        :class="element.className"
+                        :class="[element.className, data.config.inputShadowStyle]"
                         v-model="element.options.defaultValue"
                         :placeholder="element.options.placeholder"
                         :style="styleInput"
@@ -249,10 +249,12 @@
 
         <!--Выпадающий список-->
         <template v-if="element.type === 'select'">
-            <label class="cForm_item">
-                <div class="cForm_item-text" v-if="data.config.addLabelTitle" :style="styleLabel"><p v-text="element.label"></p></div>
+            <label class="cForm_item" :style="styleLabelBlock">
+                <div class="cForm_item-text" v-if="data.config.addLabelTitle" :style="styleLabel">
+                    <p>{{ element.label }}<span v-if="element.options.required"> *</span></p>
+                </div>
                 <select
-                        :class="element.className"
+                        :class="[element.className, data.config.inputShadowStyle]"
                         v-model="element.options.defaultValue"
                         :multiple="element.options.multiple"
                         :style="styleInput"
@@ -260,10 +262,10 @@
                         :disabled="element.options.disabled"
                 >
                     <option
-                            v-for="(item, index) in element.options.options"
+                            v-for="(item) in element.options.options"
                             :key="item.value"
-                            :value="element.options.showLabel ? item.value : item.label"
-                            :disabled="index === 0"
+                            :value="item.value"
+                            :disabled="item.disabled"
                             v-text="element.options.showLabel ? item.label : item.value"
                     >
                     </option>
@@ -274,8 +276,10 @@
 
         <!--Слайдер-->
         <template v-if="element.type === 'slider'">
-            <label class="cForm_item">
-                <div class="cForm_item-text" v-if="data.config.addLabelTitle" :style="styleLabel"><p v-text="element.label"></p></div>
+            <label class="cForm_item" :style="styleLabelBlock">
+                <div class="cForm_item-text" v-if="data.config.addLabelTitle" :style="styleLabel">
+                    <p>{{ element.label }}<span v-if="element.options.required"> *</span></p>
+                </div>
                 <input
                         type="range"
                         v-model="element.options.defaultValue"
@@ -337,6 +341,7 @@
             styleLabel() {
                 let config = this.data.config;
                 return {
+                    width: config.labelTitleWidth <= 0 ? '' : `${config.labelTitleWidth}%`,
                     fontWeight: config.labelTitleWeight,
                     fontSize: `${config.labelTitleSize}px`,
                     color: config.labelTitleColor,
@@ -361,6 +366,12 @@
                     borderRadius: `${config.buttonBorderRadius}px`,
                     border: `${config.buttonBorderWidth}px ${config.buttonBorderStyle} ${config.buttonBorderColor}`,
                 }
+            },
+            styleTextarea() {
+                let element = this.element.style;
+              return {
+                  height: `${element.height}px`,
+              }
             },
             styleText() {
                 let element = this.element.style;
