@@ -40,6 +40,6 @@
                     border: `${config.formBorderWidth}px ${config.formBorderStyle} ${config.formBorderColor}`,
                 }
             }
-        }
+        },
     }
 </script>

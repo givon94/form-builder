@@ -4,7 +4,7 @@ import store from './store'
 import router from './router'
 import axios from 'axios'
 import ElementUI from 'element-ui'
-import locale from 'element-ui/lib/locale/lang/en'
+import locale from 'element-ui/lib/locale/lang/ru-RU'
 const VueInputMask = require('vue-inputmask').default
 
 import './styles/reset.css'

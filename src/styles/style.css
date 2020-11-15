@@ -1,9 +1,31 @@
-.cform {
+/*Reset css*/
+.cForm div, .cForm span h4, .cForm p {
+    font: inherit;
+    margin: 0;
+    padding: 0;
+    border: 0;
+}
+.cForm button, .cForm input, .cForm select, .cForm textarea {
+    font-family: inherit;
+    font-size: 100%;
+    line-height: 1.15;
+    margin: 0;
+}
+
+.cForm {
     box-sizing: border-box;
 }
 
 .cForm * {
     box-sizing: border-box;
+}
+
+.cForm-wrapper {
+    display: inline-block;
+}
+
+.cForm_item {
+    display: inline-block;
 }
 
 /*Basic*/
@@ -67,22 +89,7 @@
 
 .cForm.inline .cForm_item-wrapper {
     display: inline-block;
-}
-
-.cForm.inline .cForm_item-wrapper.align_top {
-    vertical-align: top !important;
-}
-
-.cForm.inline .cForm_item-wrapper.align_center {
-    vertical-align: middle !important;
-}
-
-.cForm.inline .cForm_item-wrapper.align_bottom {
-    vertical-align: bottom !important;
-}
-
-.cForm.inline .cForm_item-wrapper.align_baseline {
-    vertical-align: baseline !important;
+    vertical-align: middle;
 }
 
 .cForm.inline .cForm_item-wrapper-title {
@@ -172,8 +179,12 @@
 }
 
 /*Чекбокс*/
+.cForm_item-checkbox-row {
+    margin-bottom: -5px;
+}
+
 .cForm_item-checkbox-row label {
-    margin-right: 20px;
+    margin: 5px 20px 5px 0;
 }
 
 .cForm_item-checkbox-row label:last-of-type {
@@ -192,6 +203,7 @@
 .cForm_item-checkbox-list {
     display: inline-block;
     vertical-align: middle;
+    user-select: none;
     cursor: pointer;
 }
 
@@ -208,8 +220,12 @@
 }
 
 /*Радио*/
+.cForm_item-radio-row {
+    margin-bottom: -5px;
+}
+
 .cForm_item-radio-row label {
-    margin-right: 20px;
+    margin: 5px 20px 5px 0;
 }
 
 .cForm_item-radio-row label:last-of-type {
@@ -228,6 +244,7 @@
 .cForm_item-radio-list {
     display: inline-block;
     vertical-align: middle;
+    user-select: none;
     cursor: pointer;
 }
 
@@ -405,7 +422,6 @@ textarea.cForm__input-icon {
     20px 20px 0 -20px #592385,
     0 0 0 2px #592385;
 }
-
 
 .cForm-input-shadow1 {
     box-shadow: 0 3px 12px rgba(0,0,0,.08);

@@ -9,7 +9,7 @@
               @end="handleMoveEnd"
               @add="handleWidgetAdd"
       >
-        <transition-group name="fade" tag="div" class="cForm cForm-edit" :class="data.config.formStyle">
+        <transition-group name="fade" tag="div" class="cForm-edit" :class="data.config.formStyle">
           <template v-for="(element, index) in data.list">
             <template>
               <widget-form-item

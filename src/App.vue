@@ -71,7 +71,6 @@
                                 </ul>
                             </div>
 
-
                             <div class="main__block-wrapper">
                                 <div class="main__block" :class="{'widget-empty': widgetForm.list.length == 0}">
 
@@ -355,9 +354,8 @@
         height: 100% !important;
     }
 
-
     #app {
-        font-family: "Source Sans Pro", "Helvetica Neue", Arial, sans-serif !important;
+        font-family: 'Source Sans Pro', sans-serif !important;
         -webkit-font-smoothing: antialiased;
         -moz-osx-font-smoothing: grayscale;
         color: #2c3e50;
@@ -366,17 +364,21 @@
     }
 
     .el-scrollbar__view {
-        font-family: "Source Sans Pro", "Helvetica Neue", Arial, sans-serif !important;
+        font-family: 'Source Sans Pro', sans-serif !important;
     }
 
     .el-message__content {
-        font-family: "Source Sans Pro", "Helvetica Neue", Arial, sans-serif !important;
+        font-family: 'Source Sans Pro', sans-serif !important;
         font-size: 22px !important;
     }
 
     .el-tooltip__popper {
-        font-family: "Source Sans Pro", "Helvetica Neue", Arial, sans-serif !important;
+        font-family: 'Source Sans Pro', sans-serif !important;
         font-size: 14px !important;
+    }
+
+    .el-button span {
+        font-family: 'Source Sans Pro', sans-serif !important;
     }
 
     .header {
@@ -684,7 +686,6 @@
 
 
     .cForm {
-        height: 100%;
         &-wrapper {
             &-edit {
                 height: 100%;
@@ -694,9 +695,13 @@
             }
         }
         &-edit {
+            height: 100%;
             display: block !important;
             & .cForm_item {
                 width: 100% !important;
+            }
+            & .cForm_item-text {
+                margin: 0 0 10px 0;
             }
         }
     }
@@ -728,17 +733,14 @@
             left: -2px;
             top: -2px;
             bottom: -18px;
-            //height: 28px;
-            //line-height: 28px;
             text-align: center;
-            width: 40px;
-            height: 40px;
-            line-height: 40px;
+            width: 50px;
+            height: 50px;
+            line-height: 50px;
             background: #409EFF;
             z-index: 9;
             &>i {
-                font-size: 24px;
-                //font-size: 14px;
+                font-size: 26px;
                 color: #fff;
                 margin: 0 5px;
                 cursor: move;

@@ -40,18 +40,12 @@ export default {
     },
     actions: {
         setError ({commit}, payload) {
-            console.log('commit' + commit)
-            console.log('payload' + payload)
             commit('setError', payload)
         },
         setSuccess ({commit}, payload) {
-            console.log('commit' + commit)
-            console.log('payload' + payload)
             commit('setSuccess', payload)
         },
         setWarning ({commit}, payload) {
-            console.log('commit' + commit)
-            console.log('payload' + payload)
             commit('setWarning', payload)
         },
     },
