@@ -82,6 +82,14 @@
     text-overflow: ellipsis;
 }
 
+.cForm.horizontal .cForm_item-radio {
+    width: 100%;
+}
+
+.cForm.horizontal .cForm_item-checkbox {
+    width: 100%;
+}
+
 /*Inline*/
 .cForm.inline {
     display: inline-block;

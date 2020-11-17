@@ -68,14 +68,13 @@ export const basicComponents = [
         bgIcon: true,
         className: '',
         options: {
-            defaultValue: '',
+            defaultValue: 'Заголовок',
             multiple: false,
             required: false,
             disabled: false,
             showLabel: false,
             options: [
                 {
-                    title: true,
                     label: 'Заголовок',
                     value: 'Заголовок'
                 },

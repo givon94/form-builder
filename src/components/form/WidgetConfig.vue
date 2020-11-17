@@ -46,7 +46,8 @@
               label="Значение по умолчанию"
               v-if="Object.keys(data.options).indexOf('defaultValue')>=0
                 && data.type !== 'radio'
-                && data.type !== 'checkbox'"
+                && data.type !== 'checkbox'
+                && data.type !== 'select'"
       >
           <el-input class="small" v-model="data.options.defaultValue"></el-input>
           <el-tooltip content="Определяет значение поля ввода по умолчанию (отображается при загрузке формы и может быть отредактировано пользователем)." placement="top">

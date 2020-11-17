@@ -262,10 +262,10 @@
                         :disabled="element.options.disabled"
                 >
                     <option
-                            v-for="(item) in element.options.options"
+                            v-for="(item, index) in element.options.options"
                             :key="item.value"
                             :value="item.value"
-                            :disabled="item.disabled"
+                            :disabled="index === 0 ? 'disabled' : null"
                             v-text="element.options.showLabel ? item.label : item.value"
                     >
                     </option>

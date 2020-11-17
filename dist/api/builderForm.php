@@ -4,7 +4,7 @@ $_POST = json_decode(file_get_contents('php://input'), true);
 
 $html = $_POST['html'];
 $zip_name = time().".zip";
-$files_lib = ['form_style.css', 'Инструкция.docx', 'form_script.js', 'jquery-3.3.1.min.js'];
+$files_lib = ['form_style.min.css', 'Инструкция.pdf', 'Ссылки.txt', 'form_script.js', 'jquery-3.3.1.min.js'];
 $files_lib_folder = "files/";
 $file_html = 'files/index.html';
 

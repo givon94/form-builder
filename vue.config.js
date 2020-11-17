@@ -1,5 +1,4 @@
 const CopyPlugin = require('copy-webpack-plugin');
-//const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 
 module.exports = {
@@ -9,7 +8,7 @@ module.exports = {
 	      		patterns: [
 			        {
 			          from: 'src/styles/style.css',
-			          to: 'api/files/form_style.css',
+			          to: 'api/files/form_style.min.css',
 			        },
 	      		],
 	    	}),
