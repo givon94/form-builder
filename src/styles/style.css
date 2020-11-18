@@ -26,10 +26,12 @@
 
 .cForm_item {
     display: inline-block;
+    max-width: 100% !important;
 }
 
 /*Basic*/
 .cForm.basic .cForm_item-text {
+    width: auto !important;
     margin: 0 0 10px 0;
 }
 
@@ -90,6 +92,10 @@
     width: 100%;
 }
 
+.cForm.horizontal .cForm_item-button{
+    display: inline-block !important;
+}
+
 /*Inline*/
 .cForm.inline {
     display: inline-block;
@@ -105,7 +111,20 @@
 }
 
 .cForm.inline .cForm_item-text {
+    width: auto !important;
     margin: 0 0 10px 0;
+}
+
+.cForm.inline .cForm-title {
+    width: 100% !important;
+}
+
+.cForm.inline .cForm-text {
+    width: 100% !important;
+}
+
+.cForm.horizontal .cForm_item-button {
+    width: auto !important;
 }
 
 .cForm.inline .cForm_item-wrapper:first-child, :not(.cForm_item-wrapper) + .cForm_item-wrapper .cForm_item {
@@ -187,12 +206,12 @@
 }
 
 /*Чекбокс*/
-.cForm_item-checkbox-row {
-    margin-bottom: -5px;
+.cForm.horizontal .cForm_item-checkbox-row {
+    margin: -10px 0 !important;
 }
 
 .cForm_item-checkbox-row label {
-    margin: 5px 20px 5px 0;
+    margin: 10px 20px 10px 0;
 }
 
 .cForm_item-checkbox-row label:last-of-type {
@@ -201,7 +220,7 @@
 
 .cForm_item-checkbox-column label {
     display: block;
-    margin: 10px 0;
+    margin: 15px 0;
 }
 
 .cForm_item-checkbox-column label:last-of-type {
@@ -228,12 +247,12 @@
 }
 
 /*Радио*/
-.cForm_item-radio-row {
-    margin-bottom: -5px;
+.cForm.horizontal .cForm_item-radio-row {
+    margin: -10px 0 !important;
 }
 
 .cForm_item-radio-row label {
-    margin: 5px 20px 5px 0;
+    margin: 10px 20px 10px 0;
 }
 
 .cForm_item-radio-row label:last-of-type {
@@ -242,7 +261,7 @@
 
 .cForm_item-radio-column label {
     display: block;
-    margin: 10px 0;
+    margin: 15px 0;
 }
 
 .cForm_item-radio-column label:last-of-type {
@@ -441,4 +460,23 @@ textarea.cForm__input-icon {
 
 .cForm-input-shadow3 {
     box-shadow: inset 1px 2px 4px rgba(0, 0, 0, 0.01), 0 0 8px rgba(0, 0, 0, 0.2);
+}
+
+
+@media (max-width: 575.98px) {
+    .cForm-wrapper {
+        width: 100% !important;
+    }
+
+    .cForm.horizontal .cForm_item {
+        display: inline-block;
+    }
+
+    .cForm.horizontal .cForm_item-text {
+        margin: 0 0 10px 0;
+    }
+
+    .cForm.horizontal .cForm_item-text {
+        width: 100% !important;
+    }
 }

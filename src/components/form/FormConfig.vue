@@ -172,8 +172,8 @@
 
         </el-tab-pane>
         <el-tab-pane label="Текст">
-          <el-form-item label="Максимальная ширина, %">
-            <el-slider v-model="data.labelTitleWidth"></el-slider>
+          <el-form-item label="Максимальная ширина">
+            <el-slider :max="300" v-model="data.labelTitleWidth"></el-slider>
           </el-form-item>
 
 

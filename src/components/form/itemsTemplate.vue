@@ -234,7 +234,7 @@
 
         <!--Кнопка-->
         <template v-if="element.type === 'button'">
-            <label class="cForm_item" :style="styleLabelBlock" :class="data.config.buttonPosition">
+            <label class="cForm_item cForm_item-button" :style="styleLabelBlock" :class="data.config.buttonPosition">
                 <button
                         class="cForm_item-btn"
                         :class="data.config.buttonAnimation ? 'shine' : ''"
@@ -374,8 +374,10 @@
               }
             },
             styleText() {
-                let element = this.element.style;
+                let config = this.data.config,
+                    element = this.element.style;
                 return {
+                    width: `${config.labelWidth}px`,
                     textAlign: element.textAlign,
                     fontSize: `${element.fontSize}px`,
                     fontWeight: element.fontWeight,

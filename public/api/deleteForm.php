@@ -8,6 +8,13 @@ $home = $_SERVER['DOCUMENT_ROOT']."/api/";
 
 $unlink = @unlink($home. $fileName);
 
-if($unlink == true){ echo "Файл удалён";} else{ echo "Произошла ошибка" . $home .  $fileName;}
+if($unlink == true){ 
+	echo "Файл удалён";
+} else{ 
+	echo "Произошла ошибка" . $home .  $fileName;
+	die();
+}
+
+die();
 
 ?>

@@ -1,7 +1,7 @@
 <template>
   <div class="main__block-form main__block-form-edit">
     <p v-if="data.list.length === 0" class="main__block-form-empty">Для создания формы <br>перетащите нужные компоненты слева</p>
-    <form class="cForm-wrapper-edit">
+    <form class="cForm-wrapper-edit" @submit.prevent>
       <draggable
               class="div"
               v-model="data.list"

@@ -333,7 +333,16 @@
 
                 if (form) {
                     form = form.outerHTML;
-                    this.$store.dispatch('saveForm', form)
+                    this.jsonTemplate = this.widgetForm.list;
+                    const resultName =  this.jsonTemplate.filter((item) => item.options.name).map(a => `${a.name}: ${a.options.name}`);
+                    const resultModel = this.jsonTemplate.filter((item) => !item.options.name).map(a => `${a.name}: ${a.model}`);
+                    let result = resultName.concat(resultModel);
+                    result.unshift('Название формы: form_name');
+
+                    this.$store.dispatch('saveForm', {
+                        form: form,
+                        attr_name: result
+                    })
                 } else {
                     this.$store.dispatch('setWarning', 'Сначала создайте форму')
                 }

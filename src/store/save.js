@@ -2,9 +2,9 @@ import Axios from "axios";
 
 export default {
     actions: {
-        async saveForm ({commit}, html) {
+        async saveForm ({commit}, {form, attr_name}) {
         Axios
-            .post('api/builderForm.php', {'html': html} )
+            .post('api/builderForm.php', {'html': form, 'attr_name': attr_name} )
             .then(r => r.data)
             .then(response => {
                 const fileName = response;
@@ -15,7 +15,7 @@ export default {
                         let fileURL = window.URL.createObjectURL(new Blob([response.data]));
                         let fileLink = document.createElement('a');
                         fileLink.href = fileURL;
-                        fileLink.setAttribute('download', 'file.zip');
+                        fileLink.setAttribute('download', 'pragma-form.zip');
                         document.body.appendChild(fileLink);
                         fileLink.click();
                     })
