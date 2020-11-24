@@ -7,7 +7,7 @@ require 'phpmailer/SMTP.php';
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 
-if (empty($_POST['form_name'])) die('Mailer Error!');
+if (empty($_POST['form_name']) || empty($_POST['form_email'])) die('Mailer Error!');
 
 $domen = $_POST['form_domen'];
 $subject = "Заявка с сайта " . $domen;

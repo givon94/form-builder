@@ -191,7 +191,7 @@
                   list: [],
                   config: {
                       formValue: 'Название формы',
-                      formEmail: 'test@yandex.by',
+                      formEmail: '',
                       labelBlockPaddingColumn: 10,
                       labelBlockPaddingRow: 0,
                       addLabelTitle: true,

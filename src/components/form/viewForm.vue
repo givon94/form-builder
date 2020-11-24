@@ -34,7 +34,6 @@
             styleForm() {
                 let config = this.data.config;
                 return {
-                    maxWidth: config.formMaxWidth,
                     padding: `${config.formPaddingVertical}px ${config.formPaddingHorizontal}px`,
                     backgroundColor: config.formBgColor,
                     borderRadius: `${config.formBorderRadius}px`,

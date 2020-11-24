@@ -13,7 +13,7 @@
           </el-form-item>
 
           <el-form-item label="Email">
-            <el-input class="small" v-model="data.formEmail"></el-input>
+            <el-input class="small" v-model="data.formEmail" placeholder="test@gmail.com"></el-input>
             <el-tooltip content="На данный email будут приходить письма" placement="top">
               <span class="el-prompt el-icon-question" type="primary"></span>
             </el-tooltip>
