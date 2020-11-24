@@ -15,7 +15,7 @@ export default {
                         let fileURL = window.URL.createObjectURL(new Blob([response.data]));
                         let fileLink = document.createElement('a');
                         fileLink.href = fileURL;
-                        fileLink.setAttribute('download', 'pragma-form.zip');
+                        fileLink.setAttribute('download', 'form-builder.zip');
                         document.body.appendChild(fileLink);
                         fileLink.click();
                     })

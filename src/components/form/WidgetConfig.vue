@@ -14,7 +14,7 @@
         </el-form-item>
 
         <!--Заголовок-->
-        <el-form-item label="Заголовок">
+        <el-form-item label="Заголовок" v-if="data.type !== 'button'">
             <el-input class="small" v-model="data.label"></el-input>
             <el-tooltip content="Представляет собой подпись к полю ввода." placement="top">
                 <span class="el-prompt el-icon-question" type="primary"></span>
@@ -65,12 +65,17 @@
                 </el-radio-group>
             </el-form-item>
 
-            <el-form-item label="Начертание">
-                <el-radio-group v-model="data.style.fontWeight">
-                    <el-radio-button label="700">Полужирное</el-radio-button>
-                    <el-radio-button label="400">Среднее</el-radio-button>
-                    <el-radio-button label="300">Тонкое</el-radio-button>
-                </el-radio-group>
+            <el-form-item>
+                <el-form-item label="Насыщенность шрифта">
+                    <el-select v-model="data.style.fontWeight" placeholder="Выберите насыщенность шрифта">
+                        <el-option
+                                v-for="fontWeight in fontWeights"
+                                :key="fontWeight.value"
+                                :label="fontWeight.title"
+                                :value="fontWeight.value">
+                        </el-option>
+                    </el-select>
+                </el-form-item>
             </el-form-item>
 
             <el-form-item label="Размер текста">
@@ -346,7 +351,17 @@
             { name: 'clock', value: defaultClass+ 'clock' },
             { name: 'map', value: defaultClass+ 'map' }
         ]
-      }
+      },
+        fontWeights () {
+            return [
+                { title: 'Тонкое', value: 300 },
+                { title: 'Нормальное', value: 400 },
+                { title: 'Среднее', value: 500 },
+                { title: 'Полужирное', value: 600 },
+                { title: 'Жирное', value: 700 },
+                { title: 'Сильно жирное', value: 800 },
+            ]
+        }
     },
     methods: {
       handleOptionsRemove(index) {

@@ -1,0 +1,109 @@
+<?php
+
+require 'phpmailer/Exception.php';
+require 'phpmailer/PHPMailer.php';
+require 'phpmailer/SMTP.php';
+
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
+
+if (empty($_POST['form_name'])) die('Mailer Error!');
+
+$domen = $_POST['form_domen'];
+$subject = "Заявка с сайта " . $domen;
+$to_email = $_POST['form_email'];
+
+$ip = $_SERVER['REMOTE_ADDR'];
+$user_client = htmlspecialchars($_POST['user_client']);
+$href = htmlspecialchars($_POST['href']);
+$search = htmlspecialchars($_POST['search']);
+$utm_source = htmlspecialchars($_POST['source']);
+$ref =  htmlspecialchars($_POST['ref']);
+$url =  htmlspecialchars($_POST['url']);
+$medium =  htmlspecialchars($_POST['medium']);
+$campaign =  htmlspecialchars($_POST['campaign']);
+$content =  htmlspecialchars($_POST['content']);
+$utm_term =  htmlspecialchars($_POST['term']);
+
+<!--  Add POST  -->
+
+
+$message ="
+<!DOCTYPE html>
+	<head>
+		<meta http-equiv='Content-Type' content='text/html;charset=UTF-8'/>
+		<title></title>
+	</head>
+	<body style='background-color: #ffffff; color: #000000; font-style: normal; font-variant: normal; font-weight: normal; font-size: 12px; line-height: 18px; font-family: helvetica, arial, verdana, sans-serif;'>
+	<h2 style='background-color: #eeeeee;'>Заявка с сайта $domen</h2>
+		<table cellspacing='0' cellpadding='0' width='80%' style='background-color: #ffffff;'>
+			<tbody>
+					<!--  Add TABLE  -->
+
+				<tr>
+					<td style='width: 340px; padding-top:5px;'><b>URL:</b></td>
+					<td>$href</td>
+				</tr>
+				<tr>
+					<td style='width: 340px; padding-top:5px;'><b>Referrer (источник перехода):</b></td>
+					<td>$ref</td>
+				</tr>
+				<tr>
+					<td style='width: 340px; padding-top:5px;'><b>Source: (источник кампании)</b></td>
+					<td>$utm_source</td>
+				</tr>
+				<tr>
+					<td style='width: 340px; padding-top:5px;'><b>Medium: (тип трафика)</b></td>
+					<td>$medium</td>
+				</tr>
+				<tr>
+					<td style='width: 340px; padding-top:5px;'><b>Campaign: (название кампании)</b></td>
+					<td>$campaign</td>
+				</tr>
+				<tr>
+					<td style='width: 340px; padding-top:5px;'><b>Content: (идентифик. объявления)</b></td>
+					<td>$content</td>
+				</tr>
+				<tr>
+					<td style='width: 340px; padding-top:5px;'><b>Term: (ключевые слова)</b></td>
+					<td>$utm_term</td>
+				</tr>
+				<tr>
+					<td style='width: 340px; padding-top:5px;'><b>Клиент пользователя:</b></td>
+					<td>$user_client</td>
+				</tr>
+				<tr>
+					<td style='width: 340px; padding-top:5px;'><b>IP Адрес:</b></td>
+					<td>$ip</td>
+				</tr>
+			</tbody>
+		</table>
+	</body>
+</html>
+";
+
+
+$mail = new PHPMailer(true);
+
+try {
+    $mail->isSMTP();
+    $mail->CharSet = 'UTF-8';
+    $mail->SMTPAuth   = true;
+    $mail->SMTPDebug = 0;
+    $mail->Host = 'ssl://smtp.mail.ru';
+	$mail->Port = 465;
+	$mail->Username = 'fbuilder@list.ru';
+	$mail->Password = 'AI3uMlOly+t3';
+    $mail->setFrom('fbuilder@list.ru', $domen);
+    $mail->addAddress($to_email);
+
+    $mail->isHTML(true);
+    $mail->Subject = $subject;
+    $mail->Body    = $message;
+
+    $mail->send();
+    echo "Success!";
+} catch (Exception $e) {
+
+    echo "Error: {$mail->ErrorInfo}";
+}

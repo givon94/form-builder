@@ -5,8 +5,14 @@ $_POST = json_decode(file_get_contents('php://input'), true);
 $html = $_POST['html'];
 $attr_name = $_POST['attr_name'];
 $zip_name = time().".zip";
-$files_lib = ['form_style.min.css', 'Инструкция.pdf', 'Ссылки подключения файлов.txt', 'form_script.js', 'jquery-3.3.1.min.js'];
+$files_lib = ['Инструкция.pdf', 'Ссылки подключения файлов.txt'];
+$fonts_dir = 'files/fonts';
+$php_dir = 'files/php/phpmailer';
 $files_lib_folder = "files/";
+$file_style = "form_style.min.css";
+$file_js = "form_script.js";
+$file_php = "mail.php";
+$file_jquery = "jquery-3.3.1.min.js";
 $file_html = 'files/index.html';
 
 if ($html && $attr_name) {
@@ -17,19 +23,47 @@ if ($html && $attr_name) {
 
     if ($res === TRUE) {
         foreach ($attr_name as $key=>$value) {
-            $attrName .= htmlspecialchars($value) . PHP_EOL;
+            $attrVal = explode(":", str_replace(" ", "", $value));
+            $attrValName .= '$' . $attrVal[1] . ' = $_POST["' . $attrVal[1] . '"];' . PHP_EOL;
+            $attrValTable .= '
+            <tr>
+            	<td>$' . $attrVal[1] . '</td>
+        	</tr>' . PHP_EOL;
         }
 
-        $zip->addFromString('form/Название полей.txt', $attrName);
+        $file_php_source = file_get_contents('files/mail.txt');
+        $file_php_source = str_replace('<!--  Add POST  -->',$attrValName,$file_php_source);
+        $file_php_source = str_replace('<!--  Add TABLE  -->',$attrValTable,$file_php_source);
+
         $zip->addFromString('form/form.txt', $html_new);
         $file_html_source = file_get_contents($file_html);
         $file_html_source = str_replace('<!--  Add here  -->',$html_new,$file_html_source);
 
         $zip->addFromString('form/index.html', $file_html_source);
+        $zip->addFromString('form/php/mail.php', $file_php_source);
+        $zip->addFile($files_lib_folder . $file_style, 'form/css/' . $file_style);
+        $zip->addFile($files_lib_folder . $file_js, 'form/js/' . $file_js);
+        $zip->addFile($files_lib_folder . $file_jquery, 'form/js/' . $file_jquery);
+        $zip->addFile($files_lib_folder . $file_php, 'form/php/' . $file_php);
 
         foreach($files_lib as $file) {
 			$zip->addFile($files_lib_folder . $file, 'form/' . $file);
 		}
+
+		$fonts_files = scandir($fonts_dir);
+		foreach($fonts_files as $file){
+		    if ($file == '.' || $file == '..' ){continue;}
+		    $f = $fonts_dir.DIRECTORY_SEPARATOR.$file;
+		    $zip->addFile($f, 'form/fonts/' . $file);
+		}
+
+        $php_files = scandir($php_dir);
+        foreach($php_files as $file){
+            if ($file == '.' || $file == '..' ){continue;}
+            $f = $php_dir.DIRECTORY_SEPARATOR.$file;
+            $zip->addFile($f, 'form/php/phpmailer/' . $file);
+        }
+
         $zip->close();
         echo $zip_name;
     }   else {

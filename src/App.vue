@@ -11,25 +11,40 @@
                         <!--Меню слева-->
                         <aside class="aside aside-left">
                             <div class="aside__block">
-                                <h4 class="aside__block-title">Шаблоны компонентов</h4>
-                                <draggable
-                                        tag="ul"
-                                        class="aside__block-lists"
-                                        :list="basicComponents"
-                                        v-bind="{group:{ name:'people', pull:'clone',put:false},sort:false, ghostClass: 'ghost'}"
-                                        :move="handleMove"
-                                >
-                                    <li
-                                            class="aside__block-list"
-                                            v-for="(item, index) in basicComponents"
-                                            :key="index"
-                                    >
-                                        <a href="#">
-                                            <i class="icon iconfont" :class="item.icon"></i>
-                                            <span>{{item.name}}</span>
-                                        </a>
-                                    </li>
-                                </draggable>
+                                <div class="aside__block-items">
+
+                                    <div class="aside__block-item aside__block-item-config">
+                                        <h4 class="aside__block-item-title">Шаблон</h4>
+                                        <draggable
+                                                tag="ul"
+                                                class="aside__block-lists aside__block-lists-config"
+                                                :list="basicComponents"
+                                                v-bind="{group:{ name:'people', pull:'clone',put:false},sort:false, ghostClass: 'ghost'}"
+                                                :move="handleMove"
+                                        >
+                                            <li
+                                                    class="aside__block-list"
+                                                    v-for="(item, index) in basicComponents"
+                                                    :key="index"
+                                            >
+                                                <a href="#">
+                                                    <i class="icon iconfont" :class="item.icon"></i>
+                                                    <span>{{item.name}}</span>
+                                                </a>
+                                            </li>
+                                        </draggable>
+                                    </div>
+
+                                    <div class="aside__block-item aside__block-item-edit">
+                                        <h4 class="aside__block-item-title">Форма</h4>
+                                        <widget-form
+                                                v-if="!resetJson"
+                                                ref="widgetForm"
+                                                :data="widgetForm"
+                                                :select.sync="widgetFormSelect"
+                                        ></widget-form>
+                                    </div>
+                                </div>
                             </div>
                         </aside>
 
@@ -38,24 +53,6 @@
                         <section class="main">
                             <div class="main__header">
                                 <ul class="main__header-links">
-                                    <li class="main__header-link">
-                                        <a href="#"
-                                           :class="{active: configBlock === 'formEdit'}"
-                                           @click="handleConfigBlock('formEdit')"
-                                        >
-                                            <i class="icon iconfont icon-settings"></i>
-                                            <span>Режим правки</span>
-                                        </a>
-                                    </li>
-                                    <li class="main__header-link">
-                                        <a href="#"
-                                           :class="{active: configBlock === 'formPreview'}"
-                                           @click="handleConfigBlock('formPreview')"
-                                        >
-                                            <i class="icon iconfont icon-view"></i>
-                                            <span>Предварительный просмотр</span>
-                                        </a>
-                                    </li>
                                     <li class="main__header-link">
                                         <a href="#" @click="downloadForm">
                                             <i class="icon iconfont icon-download"></i>
@@ -72,18 +69,8 @@
                             </div>
 
                             <div class="main__block-wrapper">
-                                <div class="main__block" :class="{'widget-empty': widgetForm.list.length == 0}">
-
-                                    <widget-form
-                                            v-show="configBlock ==='formEdit'"
-                                            v-if="!resetJson"
-                                            ref="widgetForm"
-                                            :data="widgetForm"
-                                            :select.sync="widgetFormSelect"
-                                    ></widget-form>
-
+                                <div class="main__block">
                                     <view-form
-                                            v-show="configBlock ==='formPreview'"
                                             v-if="!resetJson"
                                             ref="widgetForm"
                                             :data="widgetForm"
@@ -95,7 +82,7 @@
                         </section>
 
                         <!--Меню справа-->
-                        <el-aside class="aside-right widget-config-container" style="width: 370px;">
+                        <el-aside class="aside-right widget-config-container" style="width: 390px;">
                             <el-container>
                                 <el-header class="aside-right-header" height="45px">
                                     <div
@@ -204,11 +191,11 @@
                   list: [],
                   config: {
                       formValue: 'Название формы',
+                      formEmail: 'test@yandex.by',
                       labelBlockPaddingColumn: 10,
                       labelBlockPaddingRow: 0,
                       addLabelTitle: true,
                       formStyle: 'basic',
-                      formMaxWidth: 100,
                       formBgColor: '#fff',
                       formBorderRadius: 0,
                       formBorderWidth: 0,
@@ -249,7 +236,6 @@
                   }
               },
               configTab: "form",
-              configBlock: "formEdit",
               widgetFormSelect: null,
               previewVisible: false,
               jsonVisible: false,
@@ -272,11 +258,11 @@
                     list: [],
                     config: {
                         formValue: 'Название формы',
+                        formEmail: 'test@yandex.by',
                         labelBlockPaddingColumn: 10,
                         labelBlockPaddingRow: 0,
                         addLabelTitle: true,
                         formStyle: 'basic',
-                        formMaxWidth: 100,
                         formBgColor: '#fff',
                         formBorderRadius: 0,
                         formBorderWidth: 0,
@@ -296,7 +282,7 @@
                         inputBorderStyle: 'solid',
                         inputBorderColor: '#d9d9d9',
                         inputShadowStyle: 'no',
-                        labelHorizontalInline: 'align-center',
+                        labelInlinePosition: 'align_center',
                         labelWidth: 200,
                         labelTitleWidth: 0,
                         labelTitleWeight: 400,
@@ -321,9 +307,6 @@
             },
             handleConfigSelect(value) {
               this.configTab = value;
-            },
-            handleConfigBlock(value) {
-                this.configBlock = value;
             },
             handleMove() {
               return true;
@@ -421,7 +404,6 @@
             -webkit-box-direction: normal;
         }
         &__main {
-            //overflow: auto;
             overflow: hidden;
             position: relative;
             padding: 0;
@@ -448,7 +430,7 @@
 
     .aside {
         &-left {
-            width: 220px;
+            width: 450px;
             overflow-x: hidden;
             overflow-y: auto;
             -ms-flex-negative: 0;
@@ -495,7 +477,7 @@
                     display: inline-block;
                     width: 50%;
                     text-align: center;
-                    font-size: 14px;
+                    font-size: 16px;
                     font-weight: 600;
                     position: relative;
                     cursor: pointer;
@@ -510,12 +492,48 @@
             }
         }
         &__block {
-            padding: 8px 0;
             width: 100%;
-            height: 100%;
+            height: calc(100% - 20px);
             &-title {
                 font-size: 18px;
                 padding: 8px 12px;
+            }
+            &-items {
+                display: flex;
+                align-items: stretch;
+                height: calc(100% - 26px);
+            }
+            &-item {
+                &-config {
+                    width: 200px;
+                }
+                &-edit {
+                    flex: 1;
+                    &-wrapper {
+                        width: 100%;
+                        height: 100%;
+                    }
+                    & .wrapper {
+                        position: relative;
+                        width: 100%;
+                        height: 100%;
+                    }
+                }
+                &-title {
+                    text-align: center;
+                    height: 45px;
+                    font-weight: 600;
+                    line-height: 45px;
+                    background: #409eff;
+                    color: #fff;
+                }
+            }
+            &-lists {
+                width: 100%;
+                height: 100%;
+                &-config {
+                    border-right: 2px solid #c0c0c0;
+                }
             }
             &-list {
                 font-size: 16px;
@@ -561,6 +579,29 @@
                         display: inline-block;
                         vertical-align: middle;
                     }
+                }
+            }
+        }
+        &__title {
+            &-empty {
+                position: absolute;
+                top: 50px;
+                left: 0;
+                right: 0;
+                text-align: center;
+                font-size: 20px;
+                line-height: 1.2;
+                &>p {
+                    opacity: .7;
+                }
+                &>svg {
+                    position: absolute;
+                    left: 10px;
+                    bottom: -45px;
+                    transform: translate3d(0,0,0);
+                    -webkit-animation: floating 2s ease-in-out 250ms infinite;
+                    animation: floating 2s ease-in-out 250ms infinite;
+                    will-change: transform;
                 }
             }
         }
@@ -657,12 +698,6 @@
                 border: 1px dashed #999;
             }
             &-form {
-                &-edit {
-                    height: 100%;
-                    & .cForm_item {
-                        padding: 0 !important;
-                    }
-                }
                 &-view {
                     position: relative;
                     height: 100%;
@@ -670,14 +705,6 @@
                     justify-content: center;
                     align-items: center;
                     user-select: none;
-                    /*&:before {*/
-                    /*    content: '';*/
-                    /*    position: absolute;*/
-                    /*    left: 0;*/
-                    /*    right: 0;*/
-                    /*    bottom: 0;*/
-                    /*    top: 0;*/
-                    /*}*/
                 }
                 &-empty {
                     position: absolute;
@@ -689,28 +716,6 @@
                     line-height: 1.5;
                     opacity: .7;
                 }
-            }
-        }
-    }
-
-
-    .cForm {
-        &-wrapper {
-            &-edit {
-                height: 100%;
-                &>div {
-                    height: 100%;
-                }
-            }
-        }
-        &-edit {
-            height: 100%;
-            display: block !important;
-            & .cForm_item {
-                width: 100% !important;
-            }
-            & .cForm_item-text {
-                margin: 0 0 10px 0;
             }
         }
     }
@@ -739,30 +744,19 @@
         }
         &-drag {
             position: absolute;
-            left: -2px;
-            top: -2px;
-            bottom: -18px;
-            text-align: center;
-            width: 50px;
-            height: 50px;
-            line-height: 50px;
-            background: #409EFF;
-            z-index: 9;
-            &>i {
-                font-size: 26px;
-                color: #fff;
-                margin: 0 5px;
-                cursor: move;
-            }
+            left: 0;
+            right: 0;
+            bottom: 0;
+            top: 0;
         }
         &-action {
             position: absolute;
+            top: 0;
             right: 0;
             bottom: 0;
-            height: 28px;
-            line-height: 28px;
             background: #409EFF;
             z-index: 9;
+            padding: 0 5px;
             &>i {
                 font-size: 14px;
                 color: #fff;
@@ -790,7 +784,6 @@
     .el-form-item.widget-view.el-form-item--small {
         padding: 20px;
     }
-
 
     /*Временные*/
     .widget-form-container {
@@ -822,8 +815,6 @@
         line-height: 1.3 !important;
     }
 
-
-
     .footer {
         height: 30px;
         line-height: 30px;
@@ -832,5 +823,20 @@
         color: #409EFF;
         background: #fafafa;
         padding: 0 10px;
+    }
+
+    @keyframes floating {
+        0% {
+            transform: translate3d(0,0,0) rotate(0);
+            -webkit-transform: translate3d(0,0,0) rotate(0);
+        }
+        50% {
+            transform: translate3d(30px,0,0) rotate(-15deg);
+            -webkit-transform: translate3d(30px,0,0) rotate(-15deg);
+        }
+        100% {
+            transform: translate3d(0,0,0) rotate(0);
+            -webkit-transform: translate3d(0,0,0) rotate(0);
+        }
     }
 </style>

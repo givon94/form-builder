@@ -13,13 +13,14 @@ $(document).ready(function() {
 	$(":input").inputmask();
 
 	var buttonLocked = false;
-	$(".cForm").submit(function(event) {
+	$(".cForm-wrapper").submit(function(event) {
 	    event.preventDefault();
 	    buttonLocked = true;
 	    var data = $(this).serializeArray(),
 	    	thisForm = $(this),
 	    	thisBtn = thisForm.find("button");
 	    data.push({name: 'user_client', value: client_info});
+	    data.push({name: 'form_domen', value: location.host});
 	    data.push({name: 'href', value: href});
 	    data.push({name: 'search', value: search});
 	    data.push({name: 'term', value: utm_key_value.utm_term});
@@ -30,18 +31,22 @@ $(document).ready(function() {
 	    data.push({name: 'ref', value: ref});
 	    $.ajax({
 	        url: 'php/mail.php',
-	        headers: {'X-Alt-Referer': location.href, 'use-root-domain' : true},
 	        type: 'POST',
 	        data: data,
 	        beforeSend: function (data) {
 	            thisBtn.notify("Отправка заявки", {position: "bottom center", className: 'info'});
 	        },
 	        success: function (data) {
-	            console.log(data);
-	            thisBtn.notify("Заявка принята", {position: "bottom center", className: 'success'});
+	        	if (data.includes('Error')) {
+	        		thisBtn.notify("Ошибка на сервере", {position: "bottom center", className: 'error'});
+	        	} else {
+	        		thisBtn.notify("Заявка принята", {position: "bottom center", className: 'success'});
+	        		$.cookie('utm_mas', null);
+	            	$.cookie('refSave', null);
+	        	}
+
+	        	console.log(data);
 	            thisForm.trigger("reset");
-	            $.cookie('utm_mas', null);
-	            $.cookie('refSave', null);
 	            buttonLocked = false;
 	        },
 	        error: function (data) {
@@ -82,7 +87,7 @@ $(document).ready(function() {
 	if ($.cookie('utm_mas') !== null) { 
 	    var utm_mas_key = JSON.parse($.cookie("utm_mas"));
 
-	    for (i = 0; i < utm_mas_key.length; i++) {
+	    for (var i = 0; i < utm_mas_key.length; i++) {
 	        utm_key_value[utm_mas_key[i].split("=")[0]] = utm_mas_key[i].split("=")[1];
 	    }
 
@@ -91,7 +96,9 @@ $(document).ready(function() {
 	}
 
 	if (href.indexOf("?") != -1 && $.cookie('utm_mas') == null) {
-	    for (i=0; i < utm_mas.length; i++){utm_key_value[utm_mas[i].split("=")[0]] = utm_mas[i].split("=")[1];}
+	    for (var i = 0; i < utm_mas.length; i++) {
+	    	utm_key_value[utm_mas[i].split("=")[0]] = utm_mas[i].split("=")[1];
+	    }
 
 	    if (utm_key_value.utm_term != "undefined"){utm_key_value.utm_term = decodeURIComponent(utm_key_value.utm_term);}
 	    if (utm_key_value.utm_term == "undefined"){utm_key_value.utm_term = "";}

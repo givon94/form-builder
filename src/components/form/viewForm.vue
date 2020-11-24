@@ -1,9 +1,10 @@
 <template>
     <div class="main__block-form main__block-form-view">
-        <p v-if="data.list.length === 0" class="main__block-form-empty">Для создания формы перейдите в режим правки</p>
+        <p v-if="data.list.length === 0" class="main__block-form-empty">Для создания формы <br>перетащите нужные компоненты <br>из левой в правую колонку</p>
         <form v-else class="cForm-wrapper" :class="data.config.formShadow" :style="styleForm" @submit.prevent>
             <div class="cForm" :class="[data.config.formStyle]">
                 <input type="hidden" name="form_name" v-model="data.config.formValue">
+                <input type="hidden" name="form_email" v-model="data.config.formEmail">
                 <template class="cForm_item-wrapper"  v-for="(element, index) in data.list">
                     <items-template
                             :class="element.classNameLabel ? 'cForm_item-wrapper-title' : 'cForm_item-wrapper ' + data.config.labelInlinePosition"

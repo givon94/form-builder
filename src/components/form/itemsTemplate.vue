@@ -256,6 +256,7 @@
                 <select
                         :class="[element.className, data.config.inputShadowStyle]"
                         v-model="element.options.defaultValue"
+                        :name="element.model"
                         :multiple="element.options.multiple"
                         :style="styleInput"
                         :required="element.options.required"
@@ -283,6 +284,7 @@
                 <input
                         type="range"
                         v-model="element.options.defaultValue"
+                        :name="element.model"
                         :min="element.options.min"
                         :max="element.options.max"
                         :disabled="element.options.disabled"
@@ -291,8 +293,6 @@
                 >
             </label>
         </template>
-
-
 
     </div>
 </template>

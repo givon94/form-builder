@@ -29,8 +29,6 @@
 
 
 
-
-
 <script>
     import { genUniqKey } from "../../util/index";
     import itemsTemplate from "./itemsTemplate";
