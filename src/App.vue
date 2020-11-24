@@ -526,6 +526,7 @@
                     line-height: 45px;
                     background: #409eff;
                     color: #fff;
+                    user-select: none;
                 }
             }
             &-lists {
@@ -701,10 +702,20 @@
                 &-view {
                     position: relative;
                     height: 100%;
-                    display: flex;
-                    justify-content: center;
-                    align-items: center;
+                    text-align: center;
                     user-select: none;
+                    padding: 50px;
+                    &:before {
+                        content: '';
+                        height: 100%;
+                        margin-right: -4px;
+                        display: inline-block;
+                        vertical-align: middle;
+                    }
+                    & form {
+                        text-align: initial;
+                        vertical-align: middle;
+                    }
                 }
                 &-empty {
                     position: absolute;

@@ -11,7 +11,6 @@ $php_dir = 'files/php/phpmailer';
 $files_lib_folder = "files/";
 $file_style = "form_style.min.css";
 $file_js = "form_script.js";
-$file_php = "mail.php";
 $file_jquery = "jquery-3.3.1.min.js";
 $file_html = 'files/index.html';
 
