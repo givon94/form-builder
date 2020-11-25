@@ -210,6 +210,9 @@
                       inputTitleWeight: 400,
                       inputTitleSize: 18,
                       inputColor: '#333',
+                      multiInputColor: '#333',
+                      multiInputSize: 13,
+                      multiInputTitleSize: 16,
                       inputBorderRadius: 4,
                       inputBorderWidth: 1,
                       inputBorderStyle: 'solid',
@@ -277,6 +280,9 @@
                         inputTitleWeight: 400,
                         inputTitleSize: 18,
                         inputColor: '#333',
+                        multiInputColor: '#333',
+                        multiInputSize: 13,
+                        multiInputTitleSize: 16,
                         inputBorderRadius: 4,
                         inputBorderWidth: 1,
                         inputBorderStyle: 'solid',
@@ -315,15 +321,17 @@
                 const form = document.querySelector('.cForm-wrapper');
 
                 if (form) {
-                    const formResult = form.outerHTML;
-                    const jsonTemplate = this.widgetForm.list.filter((item) => !item.isInfoTemplate);
-                    const resultName =  jsonTemplate.filter((item) => item.options.name).map(a => `${a.name}: ${a.options.name}`);
-                    const resultModel = jsonTemplate.filter((item) => !item.options.name).map(a => `${a.name}: ${a.model}`);
+                    const formResult = (form.outerHTML),
+                        formResultStr = formResult.replaceAll('<!---->', ''),
+                        jsonTemplate = this.widgetForm.list.filter((item) => !item.infoTemplate),
+                        resultName =  jsonTemplate.filter((item) => item.options.name).map(a => `${a.name}: ${a.options.name}`),
+                        resultModel = jsonTemplate.filter((item) => !item.options.name).map(a => `${a.name}: ${a.model}`);
+
                     let result = resultName.concat(resultModel);
                     result.unshift('Название формы: form_name');
 
                     this.$store.dispatch('saveForm', {
-                        form: formResult,
+                        form: formResultStr,
                         attr_name: result
                     })
                 } else {

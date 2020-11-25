@@ -152,11 +152,13 @@
                             class="cForm_item-checkbox-list"
                             v-for="(item, index) in element.options.options"
                             :key="item.value + index"
+                            :style="styleMultiInputText"
                     >
                         <input
                                 type="checkbox"
                                 :name="element.options.options.length > 1 ? element.model + '[]' : element.model"
                                 :value="element.options.showLabel ? item.value : item.label"
+                                :style="styleMultiInput"
                         >
                         <span>{{element.options.showLabel ? item.label : item.value}}</span>
                     </label>
@@ -177,12 +179,14 @@
                             class="cForm_item-radio-list"
                             v-for="(item, index) in element.options.options"
                             :key="item.value + index"
+                            :style="styleMultiInputText"
                     >
                         <input
                                 type="radio"
                                 :name="element.model"
                                 :checked="index === 0"
                                 :value="element.options.showLabel ? item.value : item.label"
+                                :style="styleMultiInput"
                         >
                         <span>{{element.options.showLabel ? item.label : item.value}}</span>
                     </label>
@@ -336,6 +340,20 @@
                     color: config.inputColor,
                     borderRadius: `${config.inputBorderRadius}px`,
                     border: `${config.inputBorderWidth}px ${config.inputBorderStyle} ${config.inputBorderColor}`,
+                }
+            },
+            styleMultiInput() {
+                let config = this.data.config;
+                return {
+                    width: `${config.multiInputSize}px !important`,
+                    height: `${config.multiInputSize}px !important`,
+                }
+            },
+            styleMultiInputText() {
+                let config = this.data.config;
+                return {
+                    color: config.multiInputColor,
+                    fontSize: `${config.multiInputTitleSize}px`,
                 }
             },
             styleLabel() {

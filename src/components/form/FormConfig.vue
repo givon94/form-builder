@@ -113,6 +113,10 @@
             <el-input v-model="data.inputHeight"></el-input>
           </el-form-item>
 
+          <el-form-item label="Размер радио и чекбокс кнопок">
+            <el-slider :min="13" :max="50" v-model="data.multiInputSize"></el-slider>
+          </el-form-item>
+
           <el-form-item label="Отступ сверху/снизу между полями">
             <el-slider v-model="data.labelBlockPaddingColumn"></el-slider>
           </el-form-item>
@@ -142,8 +146,16 @@
             <el-slider :max="40" v-model="data.inputTitleSize"></el-slider>
           </el-form-item>
 
+          <el-form-item label="Размер текста чекбокс и радио кнопок">
+            <el-slider :max="40" v-model="data.multiInputTitleSize"></el-slider>
+          </el-form-item>
+
           <el-form-item label="Цвет текста">
             <el-color-picker v-model="data.inputColor"></el-color-picker>
+          </el-form-item>
+
+          <el-form-item label="Цвет текста чекбокс и радио кнопок">
+            <el-color-picker v-model="data.multiInputColor"></el-color-picker>
           </el-form-item>
 
           <el-form-item label="Радиус скругления">

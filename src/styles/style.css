@@ -193,7 +193,7 @@
     width: 100% !important;
 }
 
-.cForm.horizontal .cForm_item-button {
+.cForm.inline .cForm_item-button {
     width: auto !important;
 }
 
@@ -211,6 +211,28 @@
 
 .cForm.inline .cForm_item-radio {
     width: auto !important;
+}
+
+.cForm.inline .align_top {
+    vertical-align: top !important;
+}
+
+.cForm.inline .align_center {
+    vertical-align: middle !important;
+}
+.cForm.inline .align_bottom {
+    vertical-align: bottom !important;
+}
+.cForm.inline .align_baseline {
+    vertical-align: baseline !important;
+}
+
+.cForm.inline .cForm_item-checkbox {
+    margin-bottom: -5px;
+}
+
+.cForm.inline .cForm_item-radio {
+    margin-bottom: -5px;
 }
 
 /*Положение кнопки*/
@@ -239,17 +261,17 @@
 
 
 .cForm_item input::-webkit-input-placeholder, textarea::-webkit-input-placeholder, select::-webkit-input-placeholder {
-    color: #999;
+    color: inherit;
 }
 .cForm_item input:-ms-input-placeholder, textarea:-ms-input-placeholder, select:-ms-input-placeholder {
-    color: #999;
+    color: inherit;
 }
 .cForm_item input::-moz-placeholder, textarea::-moz-placeholder, select::-moz-placeholder {
-    color: #999;
+    color: inherit;
     opacity: 1;
 }
 .cForm_item input:-moz-placeholder, textarea:-moz-placeholder, select:-moz-placeholder {
-    color: #999;
+    color: inherit;
     opacity: 1;
 }
 .cForm_item input:focus, textarea:focus, select:focus {
@@ -289,7 +311,9 @@
 }
 
 .cForm_item-checkbox-column label {
-    display: block;
+    display: flex;
+    width: 100%;
+    /*display: block;*/
     margin: 15px 0;
 }
 
@@ -298,8 +322,8 @@
 }
 
 .cForm_item-checkbox-list {
-    display: inline-block;
-    vertical-align: middle;
+    display: inline-flex;
+    align-items: center;
     user-select: none;
     cursor: pointer;
 }
@@ -330,7 +354,9 @@
 }
 
 .cForm_item-radio-column label {
-    display: block;
+    display: flex;
+    width: 100%;
+    /*display: block;*/
     margin: 15px 0;
 }
 
@@ -339,8 +365,8 @@
 }
 
 .cForm_item-radio-list {
-    display: inline-block;
-    vertical-align: middle;
+    display: inline-flex;
+    align-items: center;
     user-select: none;
     cursor: pointer;
 }
