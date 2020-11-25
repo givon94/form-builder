@@ -312,18 +312,18 @@
               return true;
             },
             downloadForm() {
-                let form = document.querySelector('.cForm-wrapper');
+                const form = document.querySelector('.cForm-wrapper');
 
                 if (form) {
-                    form = form.outerHTML;
-                    this.jsonTemplate = this.widgetForm.list;
-                    const resultName =  this.jsonTemplate.filter((item) => item.options.name).map(a => `${a.name}: ${a.options.name}`);
-                    const resultModel = this.jsonTemplate.filter((item) => !item.options.name).map(a => `${a.name}: ${a.model}`);
+                    const formResult = form.outerHTML;
+                    const jsonTemplate = this.widgetForm.list.filter((item) => !item.isInfoTemplate);
+                    const resultName =  jsonTemplate.filter((item) => item.options.name).map(a => `${a.name}: ${a.options.name}`);
+                    const resultModel = jsonTemplate.filter((item) => !item.options.name).map(a => `${a.name}: ${a.model}`);
                     let result = resultName.concat(resultModel);
                     result.unshift('Название формы: form_name');
 
                     this.$store.dispatch('saveForm', {
-                        form: form,
+                        form: formResult,
                         attr_name: result
                     })
                 } else {

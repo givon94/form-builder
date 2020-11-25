@@ -129,7 +129,7 @@
                 <textarea
                         type="textarea"
                         :class="[element.className, data.config.inputShadowStyle]"
-                        :name="element.model"
+                        :name="element.options.name"
                         v-model="element.options.defaultValue"
                         :style="[styleInput, styleTextarea]"
                         :disabled="element.options.disabled"

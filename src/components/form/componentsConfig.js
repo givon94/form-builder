@@ -5,6 +5,7 @@ export const basicComponents = [
         icon: 'icon-title',
         label: 'Заголовок',
         classNameLabel: 'cForm_item-wrapper-title',
+        isInfoTemplate: true,
         style: {
             textAlign: 'left',
             fontSize: 20,
@@ -20,6 +21,7 @@ export const basicComponents = [
         icon: 'icon-wenzishezhi',
         label: 'Текст',
         classNameLabel: 'cForm_item-wrapper-title',
+        isInfoTemplate: true,
         style: {
             textAlign: 'left',
             fontSize: 20,
@@ -310,6 +312,7 @@ export const basicComponents = [
         type: 'button',
         name: 'Кнопка',
         icon: 'icon-mtbutton',
+        isInfoTemplate: true,
         options: {
             defaultValue: 'Отправить'
         },

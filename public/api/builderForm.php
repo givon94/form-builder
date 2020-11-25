@@ -22,11 +22,14 @@ if ($html && $attr_name) {
 
     if ($res === TRUE) {
         foreach ($attr_name as $key=>$value) {
-            $attrVal = explode(":", str_replace(" ", "", $value));
-            $attrValName .= '$' . $attrVal[1] . ' = $_POST["' . $attrVal[1] . '"];' . PHP_EOL;
+            $attrVal = explode(":", $value);
+            $attrValStr = str_replace(" ", "", $attrVal[1]);
+
+            $attrValName .= '$' . $attrValStr . ' = $_POST["' . $attrValStr . '"];' . PHP_EOL;
             $attrValTable .= '
             <tr>
-            	<td>$' . $attrVal[1] . '</td>
+            	<td><b>' . $attrVal[0] . ':</b></td>
+            	<td>$' . $attrValStr . '</td>
         	</tr>' . PHP_EOL;
         }
 
@@ -43,7 +46,6 @@ if ($html && $attr_name) {
         $zip->addFile($files_lib_folder . $file_style, 'form/css/' . $file_style);
         $zip->addFile($files_lib_folder . $file_js, 'form/js/' . $file_js);
         $zip->addFile($files_lib_folder . $file_jquery, 'form/js/' . $file_jquery);
-        $zip->addFile($files_lib_folder . $file_php, 'form/php/' . $file_php);
 
         foreach($files_lib as $file) {
 			$zip->addFile($files_lib_folder . $file, 'form/' . $file);
