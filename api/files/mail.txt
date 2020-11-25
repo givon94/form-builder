@@ -28,7 +28,7 @@ $utm_term =  htmlspecialchars($_POST['term']);
 <!--  Add POST  -->
 
 
-$message ="
+$message_template ="
 <!DOCTYPE html>
 	<head>
 		<meta http-equiv='Content-Type' content='text/html;charset=UTF-8'/>
@@ -41,39 +41,39 @@ $message ="
 					<!--  Add TABLE  -->
 
 				<tr>
-					<td style='width: 340px; padding-top:5px;'><b>URL:</b></td>
+					<td><b>URL:</b></td>
 					<td>$href</td>
 				</tr>
 				<tr>
-					<td style='width: 340px; padding-top:5px;'><b>Referrer (источник перехода):</b></td>
+					<td><b>Referrer (источник перехода):</b></td>
 					<td>$ref</td>
 				</tr>
 				<tr>
-					<td style='width: 340px; padding-top:5px;'><b>Source: (источник кампании)</b></td>
+					<td><b>Source: (источник кампании)</b></td>
 					<td>$utm_source</td>
 				</tr>
 				<tr>
-					<td style='width: 340px; padding-top:5px;'><b>Medium: (тип трафика)</b></td>
+					<td><b>Medium: (тип трафика)</b></td>
 					<td>$medium</td>
 				</tr>
 				<tr>
-					<td style='width: 340px; padding-top:5px;'><b>Campaign: (название кампании)</b></td>
+					<td><b>Campaign: (название кампании)</b></td>
 					<td>$campaign</td>
 				</tr>
 				<tr>
-					<td style='width: 340px; padding-top:5px;'><b>Content: (идентифик. объявления)</b></td>
+					<td><b>Content: (идентифик. объявления)</b></td>
 					<td>$content</td>
 				</tr>
 				<tr>
-					<td style='width: 340px; padding-top:5px;'><b>Term: (ключевые слова)</b></td>
+					<td><b>Term: (ключевые слова)</b></td>
 					<td>$utm_term</td>
 				</tr>
 				<tr>
-					<td style='width: 340px; padding-top:5px;'><b>Клиент пользователя:</b></td>
+					<td><b>Клиент пользователя:</b></td>
 					<td>$user_client</td>
 				</tr>
 				<tr>
-					<td style='width: 340px; padding-top:5px;'><b>IP Адрес:</b></td>
+					<td><b>IP Адрес:</b></td>
 					<td>$ip</td>
 				</tr>
 			</tbody>
@@ -99,7 +99,7 @@ try {
 
     $mail->isHTML(true);
     $mail->Subject = $subject;
-    $mail->Body    = $message;
+    $mail->Body    = $message_template;
 
     $mail->send();
     echo "Success!";
