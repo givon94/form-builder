@@ -347,6 +347,7 @@
     }
 
     #app {
+        overflow: hidden;
         font-family: 'Source Sans Pro', sans-serif !important;
         -webkit-font-smoothing: antialiased;
         -moz-osx-font-smoothing: grayscale;
@@ -517,6 +518,7 @@
                         position: relative;
                         width: 100%;
                         height: 100%;
+                        border-left: 2px solid #c0c0c0;
                     }
                 }
                 &-title {
@@ -532,9 +534,6 @@
             &-lists {
                 width: 100%;
                 height: 100%;
-                &-config {
-                    border-right: 2px solid #c0c0c0;
-                }
             }
             &-list {
                 font-size: 16px;
@@ -690,6 +689,10 @@
                 width: 5px;
                 border-radius: 6px;
             }
+            &::-webkit-scrollbar:horizontal {
+                height: 5px;
+                border-radius: 6px;
+            }
             &-wrapper {
                 background: #fff;
                 position: relative;
@@ -701,20 +704,14 @@
             &-form {
                 &-view {
                     position: relative;
+                    display: flex;
                     height: 100%;
                     text-align: center;
                     user-select: none;
-                    padding: 50px;
-                    &:before {
-                        content: '';
-                        height: 100%;
-                        margin-right: -4px;
-                        display: inline-block;
-                        vertical-align: middle;
-                    }
                     & form {
                         text-align: initial;
                         vertical-align: middle;
+                        margin: auto;
                     }
                 }
                 &-empty {
