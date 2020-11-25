@@ -1,4 +1,6 @@
-# Simple html form builder 
+# Simple html form builder
+
+## [Live online](https://givon94.github.io/form-builder/)
 
 ## Project setup
 ```
