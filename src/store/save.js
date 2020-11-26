@@ -29,7 +29,11 @@ export default {
                     });
             })
             .catch(error => {
-                commit('setError', 'Произошла ошибка')
+                if (error.response.status === 405) {
+                    commit('setError', 'Github не поддерживает выполенние PHP файлов')
+                } else {
+                    commit('setError', 'Произошла ошибка')
+                }
                 throw error
             });
         },
