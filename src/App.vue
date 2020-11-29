@@ -212,6 +212,7 @@
                       inputColor: '#333',
                       multiInputColor: '#333',
                       multiInputSize: 13,
+                      multiInputTitleWeight: 400,
                       multiInputTitleSize: 16,
                       inputBorderRadius: 4,
                       inputBorderWidth: 1,
@@ -261,7 +262,7 @@
                     list: [],
                     config: {
                         formValue: 'Название формы',
-                        formEmail: 'test@yandex.by',
+                        formEmail: '',
                         labelBlockPaddingColumn: 10,
                         labelBlockPaddingRow: 0,
                         addLabelTitle: true,
@@ -282,6 +283,7 @@
                         inputColor: '#333',
                         multiInputColor: '#333',
                         multiInputSize: 13,
+                        multiInputTitleWeight: 400,
                         multiInputTitleSize: 16,
                         inputBorderRadius: 4,
                         inputBorderWidth: 1,
@@ -526,7 +528,7 @@
                         position: relative;
                         width: 100%;
                         height: 100%;
-                        border-left: 2px solid #c0c0c0;
+                        border-left: 2px solid #E4E7ED;
                     }
                 }
                 &-title {

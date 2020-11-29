@@ -142,6 +142,20 @@
             </el-form-item>
           </el-form-item>
 
+
+          <el-form-item>
+            <el-form-item label="Насыщенность шрифта чекбокс и радио кнопок">
+              <el-select v-model="data.multiInputTitleWeight" placeholder="Выберите насыщенность шрифта">
+                <el-option
+                        v-for="fontWeight in fontWeights"
+                        :key="fontWeight.value"
+                        :label="fontWeight.title"
+                        :value="fontWeight.value">
+                </el-option>
+              </el-select>
+            </el-form-item>
+          </el-form-item>
+
           <el-form-item label="Размер текста">
             <el-slider :max="40" v-model="data.inputTitleSize"></el-slider>
           </el-form-item>

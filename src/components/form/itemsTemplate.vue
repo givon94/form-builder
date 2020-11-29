@@ -354,6 +354,7 @@
                 return {
                     color: config.multiInputColor,
                     fontSize: `${config.multiInputTitleSize}px`,
+                    fontWeight: config.multiInputTitleWeight,
                 }
             },
             styleLabel() {
